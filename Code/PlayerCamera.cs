@@ -11,7 +11,7 @@ public sealed class PlayerCamera : Component
 	private float OrbitYaw = 135f;
 	private float OrbitPitch = -35f;
 
-	const float MinPitch = -64f;
+	const float MinPitch = -50f;
 	const float MaxPitch = 10f;
 
 	public PlayerPawn TargetPlayer { get; set; }

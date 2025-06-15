@@ -147,28 +147,23 @@ public sealed class GameManager : Component, Component.INetworkListener
 	{
 		// Assert.True(Networking.IsHost); // after changing hosts this assert fails :)
 
-		Log.Info("disconnection event");
+		Log.Info($"Disconnection from {ConnectionChannel}");
 
-		//PlayerState PlayerStateToDestroy = null;
-		//foreach (var PlayerState in PlayerStates)
-		//{
-		//	if (PlayerState.Connection == ConnectionChannel)
-		//	{
-		//		PlayerStateToDestroy = PlayerState;
-		//	}
-		//}
+		PlayerState PlayerStateToDestroy = PlayerStates.FirstOrDefault(PlayerState => PlayerState.Connection == ConnectionChannel);
 
-		//if (PlayerStateToDestroy != null)
-		//{
-		//	PlayerStates.Remove(PlayerStateToDestroy);
+		if (PlayerStateToDestroy == null)
+		{
+			return;
+		}
 
-		//	if (PlayerStateToDestroy.PlayerPawn.IsValid())
-		//	{
-		//		PlayerStateToDestroy.PlayerPawn.GameObject.Root.Destroy();
-		//	}
+		PlayerStates.Remove(PlayerStateToDestroy);
 
-		//	PlayerStateToDestroy.GameObject.Root.Destroy();
-		//}
+		if (PlayerStateToDestroy.PlayerPawn.IsValid())
+		{
+			PlayerStateToDestroy.PlayerPawn.GameObject.Root.Destroy();
+		}
+
+		PlayerStateToDestroy.GameObject.Root.Destroy();
 	}
 
 	void INetworkListener.OnBecameHost(Connection PreviousHost)

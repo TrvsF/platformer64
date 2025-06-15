@@ -1,0 +1,100 @@
+{
+  "RootObject": {
+    "__guid": "702f6b0e-58d8-411d-ba4b-02b96da54596",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "playercamera",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "PlayerCamera",
+        "__guid": "c36b031e-5de0-4e4c-b00e-e19436c5ffa7",
+        "__enabled": true,
+        "CameraComponent": {
+          "_type": "component",
+          "component_id": "bbd732f1-e5ce-4c23-a55e-9f68c63bc61c",
+          "go": "702f6b0e-58d8-411d-ba4b-02b96da54596",
+          "component_type": "CameraComponent"
+        },
+        "DefaultTargetDistance": 250,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      },
+      {
+        "__type": "Sandbox.CameraComponent",
+        "__guid": "bbd732f1-e5ce-4c23-a55e-9f68c63bc61c",
+        "__enabled": true,
+        "BackgroundColor": "0.33333,0.46275,0.52157,1",
+        "ClearFlags": "All",
+        "FieldOfView": 60,
+        "FovAxis": "Horizontal",
+        "IsMainCamera": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Orthographic": false,
+        "OrthographicHeight": 1204,
+        "Priority": 1,
+        "RenderExcludeTags": "",
+        "RenderTags": "",
+        "TargetEye": "None",
+        "Viewport": "0,0,1,1",
+        "ZFar": 10000,
+        "ZNear": 10
+      },
+      {
+        "__type": "MainHUD",
+        "__guid": "bd47c2c4-0049-49b4-9fb0-347fecc58a7f",
+        "__enabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      }
+    ],
+    "Children": [],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

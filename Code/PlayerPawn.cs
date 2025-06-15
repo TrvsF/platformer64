@@ -9,6 +9,7 @@ public sealed class PlayerPawn : Component
 {
 	[Property] private GameObject CameraPrefab { get; set; }
 	[Property] public GameObject CameraTarget { get; set; }
+	[Property] public GameObject CameraTopBound { get; set; }
 
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; private set; }
@@ -21,7 +22,8 @@ public sealed class PlayerPawn : Component
 	{
 		base.OnStart();
 
-		CameraTargetBaseOffset = CameraTarget.LocalPosition.z;
+		CameraBaseTargetBaseOffset = CameraTarget.LocalPosition.z;
+		CameraTopTargetBaseOffset = CameraTopBound.LocalPosition.z;
 
 		if (IsProxy)
 		{
@@ -50,9 +52,6 @@ public sealed class PlayerPawn : Component
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	
-	private float CameraTargetBaseOffset = 0f;
-	private float LastJumpZWorldPos = 0f;
 
 	protected override void OnUpdate()
 	{
@@ -66,6 +65,8 @@ public sealed class PlayerPawn : Component
 		AnimationHelper.WithVelocity(CharacterController.Velocity);
 		AnimationHelper.WithWishVelocity(WishMove);
 		AnimationHelper.WithLook(WishMove);
+		AnimationHelper.WorldRotation = Rotation.FromYaw(PlayerCamera.WorldRotation.Yaw());
+		AnimationHelper.DuckLevel = CharacterController.Velocity.z > 300f ? 0 : 0.5f;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -75,16 +76,39 @@ public sealed class PlayerPawn : Component
 		base.OnFixedUpdate();
 
 		TickMovement();
+		TickCamera();
+	}
 
+	private float CameraBaseTargetBaseOffset = 0f;
+	private float CameraTopTargetBaseOffset = 0f;
+	private float LastJumpZWorldPos = 0f;
+	private bool IsOutsideOfTopBound = false;
+
+	private void TickCamera()
+	{
 		if (!CharacterController.IsOnGround)
 		{
-			CameraTarget.LocalPosition = CameraTarget.LocalPosition.WithZ(0);
-			CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ(LastJumpZWorldPos + CameraTargetBaseOffset);
+			if (IsOutsideOfTopBound)
+			{
+				CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ( WorldPosition.z + CameraBaseTargetBaseOffset);
+			}
+			else
+			{
+				CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ(LastJumpZWorldPos + CameraBaseTargetBaseOffset);
+			}
+
+			CameraTopBound.WorldPosition = CameraTopBound.WorldPosition.WithZ(LastJumpZWorldPos + CameraTopTargetBaseOffset);
 		}
 		else
 		{
-			Log.Info(CameraTarget.LocalPosition);
-			CameraTarget.LocalPosition = CameraTarget.LocalPosition.WithZ(CameraTargetBaseOffset);
+			CameraTarget.LocalPosition = CameraTarget.LocalPosition.WithZ(CameraBaseTargetBaseOffset);
+			CameraTopBound.LocalPosition = CameraTopBound.LocalPosition.WithZ(CameraTopTargetBaseOffset);
+			IsOutsideOfTopBound = false;
+		}
+
+		if (WorldPosition.z > CameraTopBound.WorldPosition.z)
+		{
+			IsOutsideOfTopBound = true;
 		}
 	}
 
@@ -135,7 +159,13 @@ public sealed class PlayerPawn : Component
 			LastJumpZWorldPos = WorldPosition.z;
 			IsJumping = true;
 
-			var JumpStrength = TimeSinceJump < .1f ? 500f : 360f;
+			var JumpStrength = 360f;
+			if (TimeSinceJump < .1f)
+			{
+				IsOutsideOfTopBound = true;
+				JumpStrength = 500f;
+			}
+
 			CharacterController.Punch(Vector3.Up * JumpStrength);
 		}
 	}

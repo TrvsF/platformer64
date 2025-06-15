@@ -1,0 +1,65 @@
+using Sandbox;
+using Sandbox.Citizen;
+using Sandbox.Diagnostics;
+using Sandbox.Utility;
+using System;
+using System.Buffers.Text;
+using System.Diagnostics;
+using System.Threading;
+
+public sealed class PlayerState : Component
+{
+	public static PlayerState Local { get; private set; }
+	public Connection Connection { get; private set; }
+	public bool IsConnected => Connection != null && Connection.IsActive;
+
+	[Property] public GameObject DefaultPlayerPawnPrefab { get; private set; }
+
+	[Sync(SyncFlags.FromHost), Property] public PlayerPawn PlayerPawn { get; private set; }
+	[Sync(SyncFlags.FromHost), Property] public ulong SteamId { get; private set; }
+	[Sync(SyncFlags.FromHost), Property] public string SteamName { get; private set; }
+	[Sync(SyncFlags.FromHost), Property] public string PingString { get; set; }
+
+	public bool Initilize_ServerOnly(Connection ConnectionIn)
+	{
+		Assert.True(Networking.IsHost);
+		Assert.NotNull(ConnectionIn);
+
+		Connection = ConnectionIn;
+		SteamId = Connection.SteamId;
+		SteamName = Connection.DisplayName;
+
+		using (Rpc.FilterInclude(Connection))
+		{
+			ClientInitilize();
+		}
+
+		return true;
+	}
+
+	[Rpc.Broadcast]
+	public void ClientInitilize()
+	{
+		Local = this;
+	}
+
+	public void SpawnPlayerPawn_ServerOnly(Connection OwningConnection)
+	{
+		Assert.True(Networking.IsHost);
+
+		Transform SpawnTransform = new();
+		var SpawnPlayerPawnPrefab = DefaultPlayerPawnPrefab.Clone(SpawnTransform, null, true);
+		SpawnPlayerPawnPrefab.Network.SetOrphanedMode(NetworkOrphaned.Destroy);
+
+		var SpawnPlayerPawnComponent = SpawnPlayerPawnPrefab.Components.Get<PlayerPawn>();
+		Assert.NotNull(SpawnPlayerPawnComponent);
+
+		if (!SpawnPlayerPawnPrefab.NetworkSpawn(OwningConnection))
+		{
+			SpawnPlayerPawnPrefab.Destroy();
+			return;
+		}
+
+		PlayerPawn = SpawnPlayerPawnComponent;
+	}
+}

@@ -67,6 +67,23 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null
+      },
+      {
+        "__type": "Sandbox.ScreenPanel",
+        "__guid": "07aefb79-5ed8-47af-b3c2-02e09bccefa5",
+        "__enabled": true,
+        "AutoScreenScale": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Opacity": 1,
+        "Scale": 1,
+        "ScaleStrategy": "ConsistentHeight",
+        "TargetCamera": null,
+        "ZIndex": 100
       }
     ],
     "Children": [],

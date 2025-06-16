@@ -170,9 +170,9 @@
       "__version": 1,
       "Flags": 0,
       "Name": "Plane",
-      "Position": "0,0,0",
+      "Position": "-3.180134,0,0",
       "Rotation": "0,0,0,1",
-      "Scale": "5,5,5",
+      "Scale": "14.07138,21.87707,5",
       "Tags": "",
       "Enabled": true,
       "NetworkMode": 2,
@@ -1400,34 +1400,19 @@
             },
             "Property": "Position",
             "Value": "-46.27026,-160.7017,0.0625"
-          },
-          {
-            "Target": {
-              "Type": "Component",
-              "IdValue": "49da7d6d-4034-4bad-ae0b-8350a4263c5d"
-            },
-            "Property": "BodyBox",
-            "Value": null
-          },
-          {
-            "Target": {
-              "Type": "Component",
-              "IdValue": "49da7d6d-4034-4bad-ae0b-8350a4263c5d"
-            },
-            "Property": "HeadBox",
-            "Value": null
           }
         ],
         "MovedObjects": []
       },
       "__PrefabIdToInstanceId": {
         "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "d74d8df2-1eaa-401d-8083-a8082a831102",
-        "49da7d6d-4034-4bad-ae0b-8350a4263c5d": "8f35f60d-636d-4097-9d90-a1fe76029948",
+        "4503e3db-7812-45da-835a-9d63e4882b1d": "ae64f399-aacb-473a-9f1c-eb54a5268d1d",
         "c995ae5f-33c7-4595-aa68-d4614a040a31": "245facbf-90d4-478d-a225-f6fa61867f5d",
         "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "ae2c776c-9ab9-492a-8d0d-eca1f4aff3b8",
         "86e361e1-38af-4194-a2bd-fbde3b9466eb": "65311cb4-4fba-46bd-8f9b-2dca5e8a5d71",
         "85429795-64a2-4ff3-9892-616c26963679": "eaa1416c-ffcc-4910-8c53-b510c4a91ac3",
-        "74e334a6-26f3-45fe-94c7-093682fc7729": "2d58a610-1ef6-4a6a-b82f-48d6b9bba675"
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "2d58a610-1ef6-4a6a-b82f-48d6b9bba675",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "6bda23f1-f95f-4f9d-b711-ab5a790bfcfa"
       }
     }
   ],

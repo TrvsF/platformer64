@@ -23,6 +23,11 @@ public sealed class PlayerCamera : Component
 
 	protected override void OnUpdate()
 	{
+		if (IsProxy)
+		{
+			return;
+		}
+
 		if (!TargetPlayer.IsValid())
 		{
 			Log.Warning($"Camera {this} does not have a valid player");

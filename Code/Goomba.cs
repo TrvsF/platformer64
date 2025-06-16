@@ -10,6 +10,7 @@ public sealed class Goomba : Component
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 
 	private TimeSince TimeSinceSpawn = 0;
+	private bool IsDead = false;
 	public bool IsQuater = false;
 
 	protected override void OnStart()
@@ -22,11 +23,16 @@ public sealed class Goomba : Component
 		TimeSinceSpawn = 0;
 	}
 
-	Vector3 Gravity = new(0, 0, 1200);
+	readonly Vector3 Gravity = new(0, 0, 1200);
 
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
+
+		if (!Networking.IsHost)
+		{
+			return;
+		}
 
 		var VelX = MathX.Lerp(CharacterController.Velocity.x, 0, .05f);
 		var VelY = MathX.Lerp(CharacterController.Velocity.y, 0, .05f);
@@ -43,52 +49,22 @@ public sealed class Goomba : Component
 
 	private void OnHeadCollide(Collider Collider)
 	{
-		if (!Networking.IsHost)
+		if (!Networking.IsHost || TimeSinceSpawn < .33f || IsDead)
 		{
 			return;
 		}
 
-		if (TimeSinceSpawn < .5f)
-		{
-			return;
-		}
+		IsDead = true;
 
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
 			Log.Info($"{PlayerPawn} STOMP");
 
-			var Knockback = (PlayerPawn.CharacterController.Velocity * -200f).WithZ(200f);
-			Knockback = Knockback.ClampLength(200f);
-			PlayerPawn.CharacterController.Punch(Knockback);
+			KnockbackPlayer(PlayerPawn, 500f, true);
 
-			if (IsQuater)
+			if (!IsQuater)
 			{
-				DestroyGameObject();
-				return;
-			}
-
-			List<Vector3> SpawnQuadrents = [];
-			SpawnQuadrents.Add(new(50, 50, 50));
-			SpawnQuadrents.Add(new(-50, 50, 50));
-			SpawnQuadrents.Add(new(50, -50, 50));
-			SpawnQuadrents.Add(new(-50, -50, 50));
-
-			for (int QuaterChildIndex = 0; QuaterChildIndex < 4; ++QuaterChildIndex)
-			{
-				var SpawnPlayerPawnPrefab = GameObject.Clone(WorldTransform, null, true);
-				SpawnPlayerPawnPrefab.Network.SetOrphanedMode(NetworkOrphaned.Destroy);
-
-				var SpawnedGoomba = SpawnPlayerPawnPrefab.Components.Get<Goomba>();
-				Assert.NotNull(SpawnedGoomba);
-
-				SpawnedGoomba.IsQuater = true;
-				SpawnedGoomba.CharacterController.Velocity = SpawnQuadrents[QuaterChildIndex] * 4f;
-
-				if (!SpawnPlayerPawnPrefab.NetworkSpawn(Connection.Host))
-				{
-					SpawnPlayerPawnPrefab.Destroy();
-					return;
-				}
+				SpawnChildren();
 			}
 
 			DestroyGameObject();
@@ -97,7 +73,7 @@ public sealed class Goomba : Component
 
 	private void OnBodyCollide(Collider Collider)
 	{
-		if (!Networking.IsHost)
+		if (!Networking.IsHost || TimeSinceSpawn < .33f || IsDead)
 		{
 			return;
 		}
@@ -105,6 +81,52 @@ public sealed class Goomba : Component
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
 			Log.Info($"{PlayerPawn} Ouch!");
+
+			KnockbackPlayer(PlayerPawn, 800f, false);
+			PlayerPawn.TakeDamage(25);
+		}
+	}
+
+	private void KnockbackPlayer(PlayerPawn Player, float Magnatude, bool IsStomp = false)
+	{
+		var VelocityInverse = Player.CharacterController.Velocity * -1f;
+		var VelocityInverseNormal = VelocityInverse.Normal;
+		var Knockback = VelocityInverseNormal * Magnatude;
+
+		if (IsStomp)
+		{
+			Knockback = Knockback.WithZ(200f);
+		}
+
+		Player.CharacterController.Punch(Knockback);
+	}
+
+	private readonly List<Vector3> ChildSpawnVelocities =
+	[
+		new Vector3(250, 250, 250),
+		new Vector3(-250, 250, 250),
+		new Vector3(250, -250, 250),
+		new Vector3(-250, -250, 250)
+	];
+
+	private void SpawnChildren()
+	{
+		for (int QuaterChildIndex = 0; QuaterChildIndex < 4; ++QuaterChildIndex)
+		{
+			var SpawnPlayerPawnPrefab = GameObject.Clone(WorldTransform, null, true);
+			SpawnPlayerPawnPrefab.Network.SetOrphanedMode(NetworkOrphaned.Destroy);
+
+			var SpawnedGoomba = SpawnPlayerPawnPrefab.Components.Get<Goomba>();
+			Assert.NotNull(SpawnedGoomba);
+
+			SpawnedGoomba.IsQuater = true;
+			SpawnedGoomba.CharacterController.Velocity = ChildSpawnVelocities[QuaterChildIndex];
+
+			if (!SpawnPlayerPawnPrefab.NetworkSpawn(Connection.Host))
+			{
+				SpawnPlayerPawnPrefab.Destroy();
+				return;
+			}
 		}
 	}
 }

@@ -101,7 +101,7 @@ public sealed class GameManager : Component, Component.INetworkListener
 		PlayerStates.Add(PlayerStateComponent);
 	}
 
-	private bool CreatePlayerState_ServerOnly(Connection ConnectionChannel, out GameObject PlayerState, out PlayerState PlayerStateComponent, bool IsMenu = false)
+	private bool CreatePlayerState_ServerOnly(Connection ConnectionChannel, out GameObject PlayerState, out PlayerState PlayerStateComponent)
 	{
 		Assert.True(Networking.IsHost);
 		Assert.True(PlayerStatePrefab.IsValid(), "Could not spawn player as no PlayerStatePrefab assigned to network manager");
@@ -169,6 +169,8 @@ public sealed class GameManager : Component, Component.INetworkListener
 	void INetworkListener.OnBecameHost(Connection PreviousHost)
 	{
 		Networking.Disconnect();
-		Game.ActiveScene.LoadFromFile("scenes/menu/menu.scene");
+
+		// TODO : FIX
+		// Game.ActiveScene.LoadFromFile("scenes/menu/menu.scene");
 	}
 }

@@ -4,12 +4,23 @@
 	<label class="watermark">
 		platformer64 infdev
 	</label>
+
+	<label class="health">
+		@(Player.Health)	
+	</label>
 </root>
 
 @code
 {
+	public PlayerPawn Player => PlayerState.Local.PlayerPawn;
+
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
+	}
+
+	protected override int BuildHash()
+	{
+		return Player.Health;
 	}
 }

@@ -14,6 +14,8 @@ public sealed class PlayerPawn : Component
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; private set; }
 
+	[Sync] public float Yaw { get; private set; }
+
 	private PlayerCamera PlayerCamera = null;
 
 	///////////////////////////////////////////////////////////////////////////
@@ -65,8 +67,35 @@ public sealed class PlayerPawn : Component
 		AnimationHelper.WithVelocity(CharacterController.Velocity);
 		AnimationHelper.WithWishVelocity(WishMove);
 		AnimationHelper.WithLook(WishMove);
-		AnimationHelper.WorldRotation = Rotation.FromYaw(PlayerCamera.WorldRotation.Yaw());
+		AnimationHelper.WorldRotation = Rotation.FromYaw(Yaw);
 		AnimationHelper.DuckLevel = CharacterController.Velocity.z > 300f ? 0 : 0.5f;
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+
+	const float DamageCooldownTime = 0.8f;
+	public TimeSince TimeSinceHealthChange = 0;
+	public int Health { get; private set; } = 100;
+
+	public void TakeDamage(int Damage)
+	{
+		if (TimeSinceHealthChange < DamageCooldownTime)
+		{
+			return;
+		}
+
+		Health -= Damage;
+		TimeSinceHealthChange = 0;
+
+		if (Health <= 0)
+		{
+			Kill();
+		}
+	}
+
+	private void Kill()
+	{
+		DestroyGameObject();
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -74,6 +103,11 @@ public sealed class PlayerPawn : Component
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
+
+		if (IsProxy)
+		{
+			return;
+		}
 
 		TickMovement();
 		TickCamera();
@@ -86,11 +120,15 @@ public sealed class PlayerPawn : Component
 
 	private void TickCamera()
 	{
+		// HACK : keep hold of yaw for animations
+		Yaw = PlayerCamera.WorldRotation.Yaw();
+
+		// move our targets around
 		if (!CharacterController.IsOnGround)
 		{
 			if (IsOutsideOfTopBound)
 			{
-				CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ( WorldPosition.z + CameraBaseTargetBaseOffset);
+				CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ(WorldPosition.z + CameraBaseTargetBaseOffset);
 			}
 			else
 			{
@@ -115,9 +153,9 @@ public sealed class PlayerPawn : Component
 	const float MaxSpeed = 300f;
 	const float MaxSprintSpeed = 420f;
 
-	Vector3 Gravity = new(0, 0, 1200);
-	Vector3 WishMove = Vector3.Zero;
+	readonly Vector3 Gravity = new(0, 0, 1200);
 
+	Vector3 WishMove = Vector3.Zero;
 	TimeSince TimeSinceJump = 0;
 	bool IsJumping = false;
 
@@ -140,7 +178,7 @@ public sealed class PlayerPawn : Component
 			var ShitLerp = Vector3.Lerp(CharacterController.Velocity, WishVel, 15 / RequestDifference.Length);
 
 			CharacterController.Velocity = ShitLerp.WithZ(0);
-			
+
 			CheckJump();
 		}
 		else

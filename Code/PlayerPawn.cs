@@ -201,7 +201,7 @@ public sealed class PlayerPawn : Component
 			if (TimeSinceJump < .1f)
 			{
 				IsOutsideOfTopBound = true;
-				JumpStrength = 500f;
+				JumpStrength = 600f;
 			}
 
 			CharacterController.Punch(Vector3.Up * JumpStrength);

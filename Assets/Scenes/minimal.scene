@@ -1414,6 +1414,48 @@
         "74e334a6-26f3-45fe-94c7-093682fc7729": "2d58a610-1ef6-4a6a-b82f-48d6b9bba675",
         "d16a3270-e967-4be4-80b4-2a360f05bdff": "6bda23f1-f95f-4f9d-b711-ab5a790bfcfa"
       }
+    },
+    {
+      "__guid": "b74199eb-6565-42f2-826f-1d3ad931c773",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "bean",
+      "Position": "141.8837,-278.1516,-5.266977",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "7225183f-8dc3-45c8-ba42-2397b35737c3",
+          "__enabled": true,
+          "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/bean/bean.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ],
+      "Children": []
     }
   ],
   "SceneProperties": {

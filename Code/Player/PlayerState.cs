@@ -43,11 +43,10 @@ public sealed class PlayerState : Component
 		Local = this;
 	}
 
-	public void SpawnPlayerPawn_ServerOnly(Connection OwningConnection)
+	public void SpawnPlayerPawn_ServerOnly(Connection OwningConnection, Transform SpawnTransform)
 	{
 		Assert.True(Networking.IsHost);
 
-		Transform SpawnTransform = new();
 		var SpawnPlayerPawnPrefab = DefaultPlayerPawnPrefab.Clone(SpawnTransform, null, true);
 		SpawnPlayerPawnPrefab.Network.SetOrphanedMode(NetworkOrphaned.Destroy);
 

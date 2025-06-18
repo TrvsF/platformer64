@@ -87,10 +87,18 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	///////////////////////////////////////////////////////////////////////////
 
+	private Transform GetRandomPlayerSpawn()
+	{
+		Assert.NotNull(Game.ActiveScene);
+
+		var Spawn = Random.Shared.FromList(Game.ActiveScene.GetAllComponents<PlayerSpawn>().ToList());
+		return Spawn.WorldTransform;
+	}
+
 	private void StartClient(Connection ConnectionChannel)
 	{
 		bool CreatedPlayerState = CreatePlayerState_ServerOnly(ConnectionChannel, out GameObject PlayerState, out PlayerState PlayerStateComponent);
-		PlayerStateComponent.SpawnPlayerPawn_ServerOnly(ConnectionChannel);
+		PlayerStateComponent.SpawnPlayerPawn_ServerOnly(ConnectionChannel, GetRandomPlayerSpawn());
 
 		if (!CreatedPlayerState)
 		{
@@ -139,7 +147,6 @@ public sealed class GameManager : Component, Component.INetworkListener
 			return;
 		}
 
-		// TODO : if we're a dedicated server init a different way!
 		StartClient(ConnectionChannel);
 	}
 

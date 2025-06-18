@@ -77,9 +77,14 @@ public sealed class PlayerPawn : Component
 	public TimeSince TimeSinceHealthChange = 0;
 	public int Health { get; private set; } = 100;
 
+	public bool IsInvunrable()
+	{
+		return TimeSinceHealthChange < DamageCooldownTime;
+	}
+
 	public void TakeDamage(int Damage)
 	{
-		if (TimeSinceHealthChange < DamageCooldownTime)
+		if (IsInvunrable())
 		{
 			return;
 		}

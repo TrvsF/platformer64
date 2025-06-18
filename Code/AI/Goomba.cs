@@ -60,7 +60,7 @@ public sealed class Goomba : Component
 		{
 			Log.Info($"{PlayerPawn} STOMP");
 
-			KnockbackPlayer(PlayerPawn, 500f, true);
+			KnockbackPlayer(PlayerPawn, 0, true);
 
 			if (!IsQuater)
 			{
@@ -89,13 +89,22 @@ public sealed class Goomba : Component
 
 	private void KnockbackPlayer(PlayerPawn Player, float Magnatude, bool IsStomp = false)
 	{
+		if (Player.IsInvunrable())
+		{
+			return;
+		}
+
 		var VelocityInverse = Player.CharacterController.Velocity * -1f;
 		var VelocityInverseNormal = VelocityInverse.Normal;
 		var Knockback = VelocityInverseNormal * Magnatude;
 
 		if (IsStomp)
 		{
-			Knockback = Knockback.WithZ(200f);
+			Knockback = Knockback.WithZ(650f);
+		}
+		else
+		{
+			Player.CharacterController.Velocity = 0;
 		}
 
 		Player.CharacterController.Punch(Knockback);

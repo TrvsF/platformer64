@@ -10,6 +10,7 @@ public sealed class PlayerPawn : Component
 	[Property] private GameObject CameraPrefab { get; set; }
 	[Property] public GameObject CameraTarget { get; set; }
 	[Property] public GameObject CameraTopBound { get; set; }
+	[Property] public GameObject CameraLowBound { get; set; }
 
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; private set; }
@@ -26,6 +27,7 @@ public sealed class PlayerPawn : Component
 
 		CameraBaseTargetBaseOffset = CameraTarget.LocalPosition.z;
 		CameraTopTargetBaseOffset = CameraTopBound.LocalPosition.z;
+		CameraLowTargetBaseOffset = CameraLowBound.LocalPosition.z;
 
 		if (IsProxy)
 		{
@@ -120,13 +122,27 @@ public sealed class PlayerPawn : Component
 
 	private float CameraBaseTargetBaseOffset = 0f;
 	private float CameraTopTargetBaseOffset = 0f;
-	private float LastJumpZWorldPos = 0f;
+	private float CameraLowTargetBaseOffset = 0f;
+
 	private bool IsOutsideOfTopBound = false;
+	private bool IsOutsideOfLowBound = false;
+	
+	private float LastJumpZWorldPos = 0f;
 
 	private void TickCamera()
 	{
 		// HACK : keep hold of yaw for animations
 		Yaw = PlayerCamera.WorldRotation.Yaw();
+
+		// check our bounds
+		if (WorldPosition.z > CameraTopBound.WorldPosition.z)
+		{
+			IsOutsideOfTopBound = true;
+		}
+		else if (WorldPosition.z < CameraLowBound.WorldPosition.z)
+		{
+			IsOutsideOfLowBound = true;
+		}
 
 		// move our targets around
 		if (!CharacterController.IsOnGround)
@@ -135,26 +151,31 @@ public sealed class PlayerPawn : Component
 			{
 				CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ(WorldPosition.z + CameraBaseTargetBaseOffset);
 			}
+			else if (IsOutsideOfLowBound)
+			{
+				CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ(WorldPosition.z + CameraBaseTargetBaseOffset);
+			}
 			else
 			{
 				CameraTarget.WorldPosition = CameraTarget.WorldPosition.WithZ(LastJumpZWorldPos + CameraBaseTargetBaseOffset);
 			}
 
+			// ensure these are in the correct position
 			CameraTopBound.WorldPosition = CameraTopBound.WorldPosition.WithZ(LastJumpZWorldPos + CameraTopTargetBaseOffset);
+			CameraLowBound.WorldPosition = CameraLowBound.WorldPosition.WithZ(LastJumpZWorldPos + CameraLowTargetBaseOffset);
 		}
 		else
 		{
 			CameraTarget.LocalPosition = CameraTarget.LocalPosition.WithZ(CameraBaseTargetBaseOffset);
 			CameraTopBound.LocalPosition = CameraTopBound.LocalPosition.WithZ(CameraTopTargetBaseOffset);
-			IsOutsideOfTopBound = false;
-		}
+			CameraLowBound.LocalPosition = CameraLowBound.LocalPosition.WithZ(CameraLowTargetBaseOffset);
 
-		if (WorldPosition.z > CameraTopBound.WorldPosition.z)
-		{
-			IsOutsideOfTopBound = true;
+			IsOutsideOfTopBound = false;
+			IsOutsideOfLowBound = false;
 		}
 	}
 
+	const float DoubleJumpWindow = .33f;
 	const float MaxSpeed = 300f;
 	const float MaxSprintSpeed = 420f;
 
@@ -162,6 +183,7 @@ public sealed class PlayerPawn : Component
 
 	Vector3 WishMove = Vector3.Zero;
 	TimeSince TimeSinceJump = 0;
+	bool HadDoubleJumped = false;
 	bool IsJumping = false;
 
 	private void TickMovement()
@@ -203,10 +225,15 @@ public sealed class PlayerPawn : Component
 			IsJumping = true;
 
 			var JumpStrength = 360f;
-			if (TimeSinceJump < .1f)
+			if (TimeSinceJump < DoubleJumpWindow && !HadDoubleJumped)
 			{
+				HadDoubleJumped = true;
 				IsOutsideOfTopBound = true;
 				JumpStrength = 600f;
+			}
+			else
+			{
+				HadDoubleJumped = false;
 			}
 
 			CharacterController.Punch(Vector3.Up * JumpStrength);

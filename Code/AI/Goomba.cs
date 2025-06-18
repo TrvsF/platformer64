@@ -6,6 +6,7 @@ public sealed class Goomba : Component
 {
 	[Property] public BoxCollider HeadBox { get; set; }
 	[Property] public BoxCollider BodyBox { get; set; }
+	[Property] public GameObject ChildPrefab { get; set; }
 
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 
@@ -122,7 +123,7 @@ public sealed class Goomba : Component
 	{
 		for (int QuaterChildIndex = 0; QuaterChildIndex < 4; ++QuaterChildIndex)
 		{
-			var SpawnPlayerPawnPrefab = GameObject.Clone(WorldTransform, null, true);
+			var SpawnPlayerPawnPrefab = ChildPrefab.Clone(WorldTransform, null, true);
 			SpawnPlayerPawnPrefab.Network.SetOrphanedMode(NetworkOrphaned.Destroy);
 
 			var SpawnedGoomba = SpawnPlayerPawnPrefab.Components.Get<Goomba>();

@@ -72,7 +72,9 @@ public sealed class GameManager : Component, Component.INetworkListener
 		base.OnDestroy();
 	}
 
-	private static bool CreateLobby(string LobbyName = "awesomelobby", LobbyPrivacy Privacy = LobbyPrivacy.Public)
+	///////////////////////////////////////////////////////////////////////////
+	
+	public static bool CreateLobby(string LobbyName = "awesomelobby", LobbyPrivacy Privacy = LobbyPrivacy.Public)
 	{
 		LobbyConfig Config = new();
 		Config.Name = LobbyName;

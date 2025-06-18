@@ -3,7 +3,7 @@
     "__guid": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9",
     "__version": 1,
     "Flags": 0,
-    "Name": "goomba",
+    "Name": "goomba_lil",
     "Position": "0,0,0",
     "Rotation": "0,0,0,1",
     "Scale": "1,1,1",
@@ -24,10 +24,7 @@
           "go": "c995ae5f-33c7-4595-aa68-d4614a040a31",
           "component_type": "BoxCollider"
         },
-        "ChildPrefab": {
-          "_type": "gameobject",
-          "prefab": "prefabs/goomba_lil.prefab"
-        },
+        "ChildPrefab": null,
         "HeadBox": {
           "_type": "component",
           "component_id": "74e334a6-26f3-45fe-94c7-093682fc7729",
@@ -87,8 +84,8 @@
             "CreateAttachments": false,
             "CreateBoneObjects": false,
             "MaterialGroup": null,
-            "MaterialOverride": "materials/bean_bake.vmat",
-            "Model": "models/vmodels/bean.vmdl",
+            "MaterialOverride": "materials/bean_lil_bake.vmat",
+            "Model": "models/vmodels/bean_lil.vmdl",
             "Morphs": {},
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
@@ -123,7 +120,7 @@
             "__type": "Sandbox.BoxCollider",
             "__guid": "86e361e1-38af-4194-a2bd-fbde3b9466eb",
             "__enabled": true,
-            "Center": "-10.16484,1.217153,22.477",
+            "Center": "-0.6667557,4.545172,13.52733",
             "Friction": null,
             "IsTrigger": true,
             "OnComponentDestroy": null,
@@ -136,7 +133,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "26.58339,32.54678,44.954",
+            "Scale": "21.4017,22.03282,27.05465",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"
@@ -163,7 +160,7 @@
             "__type": "Sandbox.BoxCollider",
             "__guid": "74e334a6-26f3-45fe-94c7-093682fc7729",
             "__enabled": true,
-            "Center": "-10.29537,3.917438,52.55719",
+            "Center": "-1.387362,4.471445,33.25118",
             "Friction": null,
             "IsTrigger": true,
             "OnComponentDestroy": null,
@@ -176,7 +173,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "22.3081,24.66763,13.52964",
+            "Scale": "22.29205,22.27566,10.96259",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"

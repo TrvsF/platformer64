@@ -9,10 +9,10 @@
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,
-    "NetworkMode": 2,
+    "NetworkMode": 1,
     "NetworkInterpolation": true,
-    "NetworkOrphaned": 0,
-    "OwnerTransfer": 1,
+    "NetworkOrphaned": 1,
+    "OwnerTransfer": 0,
     "Components": [
       {
         "__type": "Platform",
@@ -57,9 +57,9 @@
         "Gravity": false,
         "LinearDamping": 0,
         "Locking": {
-          "X": false,
-          "Y": false,
-          "Z": false,
+          "X": true,
+          "Y": true,
+          "Z": true,
           "Pitch": false,
           "Yaw": false,
           "Roll": false

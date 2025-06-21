@@ -329,7 +329,30 @@
               "IdValue": "f858dede-c2e8-4e28-a73f-ca7466248847"
             },
             "Property": "Position",
-            "Value": "-440.8033,711.0028,293.0625"
+            "Value": "-440.8033,1018.143,258.7546"
+          },
+          {
+            "Target": {
+              "Type": "Component",
+              "IdValue": "15dcea49-e86d-46b8-85cf-cdb95b5ef45c"
+            },
+            "Property": "Locking",
+            "Value": {
+              "X": false,
+              "Y": false,
+              "Z": false,
+              "Pitch": false,
+              "Yaw": false,
+              "Roll": false
+            }
+          },
+          {
+            "Target": {
+              "Type": "Component",
+              "IdValue": "15dcea49-e86d-46b8-85cf-cdb95b5ef45c"
+            },
+            "Property": "MotionEnabled",
+            "Value": false
           }
         ],
         "MovedObjects": []
@@ -347,7 +370,8 @@
         "bdd093d1-5835-454b-a6f4-9213e43379dd": "ea2c21be-4693-40e7-861c-6bcf7dd9780f",
         "aea6414e-c416-4a2f-a8e0-e707047efa51": "e0577743-d33d-454f-89e4-365b36ec6712",
         "9b8be051-31b5-4423-b96b-f614d7470a88": "0f01ccb1-6f5b-4bdb-83fb-a4b855878055",
-        "15dcea49-e86d-46b8-85cf-cdb95b5ef45c": "dedb3c3f-69fb-4ab6-bd9f-8a9b8dfdef2a"
+        "15dcea49-e86d-46b8-85cf-cdb95b5ef45c": "dedb3c3f-69fb-4ab6-bd9f-8a9b8dfdef2a",
+        "a248595b-a932-4533-8a3f-9714de7a2a90": "ce533f61-56b6-449a-bf2a-7d17970910b5"
       }
     }
   ],

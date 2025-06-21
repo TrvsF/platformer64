@@ -15,30 +15,6 @@
     "OwnerTransfer": 1,
     "Components": [
       {
-        "__type": "Goomba",
-        "__guid": "4503e3db-7812-45da-835a-9d63e4882b1d",
-        "__enabled": true,
-        "BodyBox": {
-          "_type": "component",
-          "component_id": "86e361e1-38af-4194-a2bd-fbde3b9466eb",
-          "go": "c995ae5f-33c7-4595-aa68-d4614a040a31",
-          "component_type": "BoxCollider"
-        },
-        "ChildPrefab": null,
-        "HeadBox": {
-          "_type": "component",
-          "component_id": "74e334a6-26f3-45fe-94c7-093682fc7729",
-          "go": "85429795-64a2-4ff3-9892-616c26963679",
-          "component_type": "BoxCollider"
-        },
-        "OnComponentDestroy": null,
-        "OnComponentDisabled": null,
-        "OnComponentEnabled": null,
-        "OnComponentFixedUpdate": null,
-        "OnComponentStart": null,
-        "OnComponentUpdate": null
-      },
-      {
         "__type": "Sandbox.CharacterController",
         "__guid": "d16a3270-e967-4be4-80b4-2a360f05bdff",
         "__enabled": true,
@@ -56,6 +32,31 @@
         "Radius": 16,
         "StepHeight": 18,
         "UseCollisionRules": false
+      },
+      {
+        "__type": "Goomba",
+        "__guid": "3c245e05-739c-412c-b67b-ffd4cf7ef692",
+        "__enabled": true,
+        "BodyBox": {
+          "_type": "component",
+          "component_id": "86e361e1-38af-4194-a2bd-fbde3b9466eb",
+          "go": "c995ae5f-33c7-4595-aa68-d4614a040a31",
+          "component_type": "BoxCollider"
+        },
+        "CanHaveChildren": false,
+        "ChildPrefab": null,
+        "HeadBox": {
+          "_type": "component",
+          "component_id": "74e334a6-26f3-45fe-94c7-093682fc7729",
+          "go": "85429795-64a2-4ff3-9892-616c26963679",
+          "component_type": "BoxCollider"
+        },
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
       }
     ],
     "Children": [

@@ -1,18 +1,28 @@
 using Sandbox;
 using Sandbox.Diagnostics;
 using System;
+using System.ComponentModel.Design.Serialization;
+
+enum EAIState
+{
+	Idle,
+	Spawn,
+	Wonder,
+	Chase,
+}
 
 public sealed class Goomba : Component
 {
 	[Property] public BoxCollider HeadBox { get; set; }
 	[Property] public BoxCollider BodyBox { get; set; }
+
+	[Property] public bool CanHaveChildren { get; set; } = false;
 	[Property] public GameObject ChildPrefab { get; set; }
 
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 
 	private TimeSince TimeSinceSpawn = 0;
 	private bool IsDead = false;
-	public bool IsQuater = false;
 
 	protected override void OnStart()
 	{
@@ -26,6 +36,14 @@ public sealed class Goomba : Component
 
 	readonly Vector3 Gravity = new(0, 0, 1200);
 
+	private EAIState AIState = EAIState.Idle;
+
+	// called when spawned as a child
+	public void OnSpawn()
+	{
+		AIState = EAIState.Spawn;
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
@@ -35,17 +53,45 @@ public sealed class Goomba : Component
 			return;
 		}
 
-		var VelX = MathX.Lerp(CharacterController.Velocity.x, 0, .05f);
-		var VelY = MathX.Lerp(CharacterController.Velocity.y, 0, .05f);
+		switch (AIState)
+		{
+			case EAIState.Spawn:
+				var VelX = MathX.Lerp(CharacterController.Velocity.x, 0, .05f);
+				var VelY = MathX.Lerp(CharacterController.Velocity.y, 0, .05f);
 
-		CharacterController.Velocity = new(VelX, VelY, CharacterController.Velocity.z);
+				CharacterController.Velocity = new(VelX, VelY, CharacterController.Velocity.z);
+				break;
+			case EAIState.Wonder:
+				var Yaw = GameObject.WorldRotation.Yaw();
+				GameObject.WorldRotation = Rotation.FromYaw(Yaw + 2);
+
+
+
+				CharacterController.Velocity = Vector3.Backward.RotateAround(0, Rotation.FromYaw(Yaw + 2)) * 50;
+				break;
+		}
 
 		if (!CharacterController.IsOnGround)
 		{
 			CharacterController.Velocity -= Gravity * Time.Delta;
 		}
 
+		if (CharacterController.Velocity == 0)
+		{
+			AIState = EAIState.Wonder;
+		}
+
+		if (AIState == EAIState.Wonder)
+		{
+			CheckForPlayer();
+		}
+
 		CharacterController.Move();
+	}
+
+	private void CheckForPlayer()
+	{
+
 	}
 
 	private void OnHeadCollide(Collider Collider)
@@ -63,7 +109,7 @@ public sealed class Goomba : Component
 
 			KnockbackPlayer(PlayerPawn, 0, true);
 
-			if (!IsQuater)
+			if (CanHaveChildren)
 			{
 				SpawnChildren();
 			}
@@ -129,8 +175,8 @@ public sealed class Goomba : Component
 			var SpawnedGoomba = SpawnPlayerPawnPrefab.Components.Get<Goomba>();
 			Assert.NotNull(SpawnedGoomba);
 
-			SpawnedGoomba.IsQuater = true;
 			SpawnedGoomba.CharacterController.Velocity = ChildSpawnVelocities[QuaterChildIndex];
+			SpawnedGoomba.OnSpawn();
 
 			if (!SpawnPlayerPawnPrefab.NetworkSpawn(Connection.Host))
 			{

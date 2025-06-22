@@ -5,6 +5,10 @@
 		platformer64 infdev
 	</label>
 
+	<label class="collectables">
+		@(GameManager.GetCollectableString())
+	</label>
+	
 	<label class="health">
 		@(Player.Health)	
 	</label>
@@ -21,6 +25,6 @@
 
 	protected override int BuildHash()
 	{
-		return Player.Health;
+		return (Time.Now * 100f).CeilToInt();
 	}
 }

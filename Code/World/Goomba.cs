@@ -34,8 +34,6 @@ public sealed class Goomba : Component
 		TimeSinceSpawn = 0;
 	}
 
-	readonly Vector3 Gravity = new(0, 0, 1200);
-
 	private EAIState AIState = EAIState.Idle;
 
 	// called when spawned as a child
@@ -63,17 +61,15 @@ public sealed class Goomba : Component
 				break;
 			case EAIState.Wonder:
 				var Yaw = GameObject.WorldRotation.Yaw();
-				GameObject.WorldRotation = Rotation.FromYaw(Yaw + 2);
-
-
-
-				CharacterController.Velocity = Vector3.Backward.RotateAround(0, Rotation.FromYaw(Yaw + 2)) * 50;
+				// GameObject.WorldRotation = Rotation.FromYaw(Yaw + 2);
+				// CharacterController.Velocity = Vector3.Forward.RotateAround(0, Rotation.FromYaw(Yaw + 2)) * 50;
+				CharacterController.Velocity = Vector3.Forward * 50;
 				break;
 		}
 
 		if (!CharacterController.IsOnGround)
 		{
-			CharacterController.Velocity -= Gravity * Time.Delta;
+			CharacterController.Velocity -= GameManager.Gravity * Time.Delta;
 		}
 
 		if (CharacterController.Velocity == 0)
@@ -97,6 +93,11 @@ public sealed class Goomba : Component
 	private void OnHeadCollide(Collider Collider)
 	{
 		if (!Networking.IsHost || TimeSinceSpawn < .33f || IsDead)
+		{
+			return;
+		}
+
+		if (!Collider.Tags.Contains("feet"))
 		{
 			return;
 		}

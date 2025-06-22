@@ -22,6 +22,9 @@ public sealed class GameManager : Component, Component.INetworkListener
 	[Property] public GameObject PlayerStatePrefab { get; set; } = null;
 	[Property] public EGameNetworkMode NetworkMode { get; set; } = EGameNetworkMode.Singleplayer;
 
+	// TODO : move?
+	static readonly public Vector3 Gravity = new(0, 0, 1200);
+
 	protected override async Task OnLoad()
 	{
 		await base.OnLoad();
@@ -29,29 +32,6 @@ public sealed class GameManager : Component, Component.INetworkListener
 		if (Scene.IsEditor)
 		{
 			return;
-		}
-
-		if (NetworkMode == EGameNetworkMode.Multiplayer)
-		{
-			if (Networking.IsActive)
-			{
-				// INetworkListener.OnActive will be called
-				return;
-			}
-
-			bool Joined = false;
-
-			if (!Game.IsEditor)
-			{
-				Joined = await Networking.JoinBestLobby(Game.Ident);
-			}
-
-			if (!Joined)
-			{
-				Log.Info("starting own lobby...");
-				CreateLobby();
-				// INetworkListener.OnActive will be called
-			}
 		}
 	}
 
@@ -73,7 +53,39 @@ public sealed class GameManager : Component, Component.INetworkListener
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	
+
+	private static Dictionary<ECollectable, int> CollectablesCollected;
+
+	protected override void OnStart()
+	{
+		base.OnStart();
+
+		CollectablesCollected = new()
+		{
+			{ ECollectable.Disc, 0 },
+			{ ECollectable.Fast, 0 },
+		};
+	}
+
+	public static int OnCollect(ECollectable CollectableType, int Collectables = 1)
+	{
+		return CollectablesCollected[CollectableType] += Collectables;
+	}
+
+	public static string GetCollectableString()
+	{
+		var CollectableString = "";
+
+		foreach (var CollectablePair in CollectablesCollected)
+		{
+			CollectableString += $"{CollectablePair.Key.ToString().ToLower()}s : {CollectablePair.Value}\n";
+		}
+
+		return CollectableString;
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+
 	public static bool CreateLobby(string LobbyName = "awesomelobby", LobbyPrivacy Privacy = LobbyPrivacy.Public)
 	{
 		LobbyConfig Config = new();

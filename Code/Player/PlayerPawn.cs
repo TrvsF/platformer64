@@ -70,7 +70,7 @@ public sealed class PlayerPawn : Component
 		AnimationHelper.WithWishVelocity(WishMove);
 		AnimationHelper.WithLook(WishMove);
 		AnimationHelper.WorldRotation = Rotation.FromYaw(Yaw);
-		AnimationHelper.DuckLevel = CharacterController.Velocity.z > 300f ? 0 : 0.5f;
+		AnimationHelper.DuckLevel = IsCrouching ? 1 : 0.5f;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -175,23 +175,30 @@ public sealed class PlayerPawn : Component
 		}
 	}
 
-	const float DoubleJumpWindow = .33f;
+	const float DoubleJumpWindow = .2f;
 	const float MaxSpeed = 300f;
-	const float MaxSprintSpeed = 420f;
-
-	readonly Vector3 Gravity = new(0, 0, 1200);
+	const float MaxCrouchSpeed = 150f;
 
 	Vector3 WishMove = Vector3.Zero;
 	TimeSince TimeSinceJump = 0;
 	bool HadDoubleJumped = false;
 	bool IsJumping = false;
+	bool IsCrouching = false;
+	bool IsRolling = false;
 
 	private void TickMovement()
 	{
 		var CameraYaw = PlayerCamera.GameObject.WorldRotation.Yaw();
 		WishMove = Input.AnalogMove.Normal * Rotation.FromYaw(CameraYaw);
 
-		var WishVel = WishMove * MaxSpeed;
+		var MaxTickSpeed = IsCrouching && !IsRolling ? MaxCrouchSpeed : MaxSpeed;
+		if (IsRolling)
+		{
+			MaxTickSpeed *= 1.33f;
+		}
+
+		Log.Info(MaxTickSpeed);
+		var WishVel = WishMove * MaxTickSpeed;
 
 		if (CharacterController.IsOnGround)
 		{
@@ -202,19 +209,35 @@ public sealed class PlayerPawn : Component
 			}
 
 			var RequestDifference = CharacterController.Velocity - WishVel;
-			var ShitLerp = Vector3.Lerp(CharacterController.Velocity, WishVel, 15 / RequestDifference.Length);
+			var ShitLerpFactor = IsRolling ? 5 : 15;
+			var ShitLerp = Vector3.Lerp(CharacterController.Velocity, WishVel, ShitLerpFactor / RequestDifference.Length);
 
 			CharacterController.Velocity = ShitLerp.WithZ(0);
 
 			CheckJump();
+			CheckCrouch();
 		}
 		else
 		{
-			CharacterController.Velocity -= Gravity * Time.Delta;
+			CharacterController.Velocity -= GameManager.Gravity * Time.Delta;
 			CharacterController.Accelerate(WishVel / 3f);
 		}
 
 		CharacterController.Move();
+	}
+
+	private void CheckCrouch()
+	{
+		IsCrouching = Input.Down("Duck") && !IsJumping;
+
+		if (IsCrouching && CharacterController.Velocity.Length >= MaxSpeed)
+		{
+			IsRolling = true;
+		}
+		else
+		{
+			IsRolling = false;
+		}
 	}
 
 	private void CheckJump()

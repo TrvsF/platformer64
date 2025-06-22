@@ -5,7 +5,7 @@
     "Flags": 0,
     "Name": "goomba_lil",
     "Position": "0,0,0",
-    "Rotation": "0,0,0,1",
+    "Rotation": "0,-0,-0.7071068,0.7071068",
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,

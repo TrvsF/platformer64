@@ -15,7 +15,8 @@ public sealed class PlayerPawn : Component
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; private set; }
 
-	[Sync] public float Yaw { get; private set; }
+	[Sync] public float Yaw { get; private set; } = 0f;
+	[Sync] public bool IsCrouching { get; private set; } = false;
 
 	private PlayerCamera PlayerCamera = null;
 
@@ -71,6 +72,7 @@ public sealed class PlayerPawn : Component
 		AnimationHelper.WithLook(WishMove);
 		AnimationHelper.WorldRotation = Rotation.FromYaw(Yaw);
 		AnimationHelper.DuckLevel = IsCrouching ? 1 : 0.5f;
+		AnimationHelper.IsGrounded = CharacterController.IsOnGround;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -183,13 +185,19 @@ public sealed class PlayerPawn : Component
 	TimeSince TimeSinceJump = 0;
 	bool HadDoubleJumped = false;
 	bool IsJumping = false;
-	bool IsCrouching = false;
 	bool IsRolling = false;
 
 	private void TickMovement()
 	{
 		var CameraYaw = PlayerCamera.GameObject.WorldRotation.Yaw();
-		WishMove = Input.AnalogMove.Normal * Rotation.FromYaw(CameraYaw);
+
+		var WishInput = Input.AnalogMove.Normal;
+		if (WishInput == 0 && IsRolling)
+		{
+			WishInput = Vector3.Forward;
+		}
+
+		WishMove = WishInput * Rotation.FromYaw(CameraYaw);
 
 		var MaxTickSpeed = IsCrouching && !IsRolling ? MaxCrouchSpeed : MaxSpeed;
 		if (IsRolling)
@@ -259,7 +267,12 @@ public sealed class PlayerPawn : Component
 				HadDoubleJumped = false;
 			}
 
-			CharacterController.Punch(Vector3.Up * JumpStrength);
+			var PunchVector = Vector3.Up * JumpStrength;
+			if (HadDoubleJumped)
+			{
+				PunchVector += Rotation.FromYaw(WorldRotation.Yaw()) * Vector3.Forward * (CharacterController.Velocity.Length * .5f);
+			}
+			CharacterController.Punch(PunchVector);
 		}
 	}
 }

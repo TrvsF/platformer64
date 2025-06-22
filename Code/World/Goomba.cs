@@ -54,16 +54,17 @@ public sealed class Goomba : Component
 		switch (AIState)
 		{
 			case EAIState.Spawn:
+				// slow them down as they yeet out
 				var VelX = MathX.Lerp(CharacterController.Velocity.x, 0, .05f);
 				var VelY = MathX.Lerp(CharacterController.Velocity.y, 0, .05f);
 
 				CharacterController.Velocity = new(VelX, VelY, CharacterController.Velocity.z);
+				// spin them round too
+				var Yaw = GameObject.WorldRotation.Yaw();
+				GameObject.WorldRotation = Rotation.FromYaw(Yaw + Random.Shared.Int(0, 5));
 				break;
 			case EAIState.Wonder:
-				var Yaw = GameObject.WorldRotation.Yaw();
-				// GameObject.WorldRotation = Rotation.FromYaw(Yaw + 2);
-				// CharacterController.Velocity = Vector3.Forward.RotateAround(0, Rotation.FromYaw(Yaw + 2)) * 50;
-				CharacterController.Velocity = Vector3.Forward * 50;
+				CharacterController.Velocity = Vector3.Left * 50 * Rotation.FromYaw(WorldRotation.Yaw());
 				break;
 		}
 

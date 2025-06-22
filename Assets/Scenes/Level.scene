@@ -262,6 +262,14 @@
             },
             "Property": "Position",
             "Value": "-202.804,517.5278,296.0625"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Rotation",
+            "Value": "0,0,0.6087613,0.7933534"
           }
         ],
         "MovedObjects": []
@@ -407,6 +415,49 @@
         "fa002e7e-76e1-4fb0-9122-426ee6153983": "2b98f162-e6d5-471c-b691-393ed04d2d75",
         "342cb692-4ea1-47a4-9029-c9c659528e94": "3b9d9b0c-e352-4b0e-a914-2f36548c4b4e",
         "869c9293-0133-40af-8ae4-785878cfea3d": "7be9a301-e986-4160-a7a0-cb38fc28869b"
+      }
+    },
+    {
+      "__guid": "6335ff77-5eff-455f-8af3-1d9ebfb247ef",
+      "__version": 1,
+      "__Prefab": "prefabs/disc.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "4537da37-7f45-44f6-ac4c-5f8b06eb954b"
+            },
+            "Property": "Name",
+            "Value": "disc (1)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "4537da37-7f45-44f6-ac4c-5f8b06eb954b"
+            },
+            "Property": "Position",
+            "Value": "386.4146,1032.858,336.5163"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "4537da37-7f45-44f6-ac4c-5f8b06eb954b"
+            },
+            "Property": "Rotation",
+            "Value": "0,0,0,0.9999999"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "4537da37-7f45-44f6-ac4c-5f8b06eb954b": "6335ff77-5eff-455f-8af3-1d9ebfb247ef",
+        "d862a3c6-ec31-49fe-b0a6-1cb0190f7f24": "f2d6fd6b-7e3a-4e69-8542-2346ec207464",
+        "fa002e7e-76e1-4fb0-9122-426ee6153983": "a96fb414-2394-4871-bdae-81fb60a37713",
+        "342cb692-4ea1-47a4-9029-c9c659528e94": "3769af5e-bedd-45c7-8e24-43f2c30d7948",
+        "869c9293-0133-40af-8ae4-785878cfea3d": "34c576d5-b3d1-4b22-a387-c2c95ec2a0de"
       }
     }
   ],

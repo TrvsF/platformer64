@@ -4,6 +4,7 @@ using Sandbox.Diagnostics;
 using System;
 using System.Buffers.Text;
 using System.Diagnostics;
+using System.Numerics;
 
 public sealed class PlayerPawn : Component
 {
@@ -17,6 +18,7 @@ public sealed class PlayerPawn : Component
 
 	[Sync] public float Yaw { get; private set; } = 0f;
 	[Sync] public bool IsCrouching { get; private set; } = false;
+	[Sync] public bool IsRolling { get; private set; } = false;
 
 	private PlayerCamera PlayerCamera = null;
 
@@ -70,9 +72,14 @@ public sealed class PlayerPawn : Component
 		AnimationHelper.WithVelocity(CharacterController.Velocity);
 		AnimationHelper.WithWishVelocity(WishMove);
 		AnimationHelper.WithLook(WishMove);
-		AnimationHelper.WorldRotation = Rotation.FromYaw(Yaw);
-		AnimationHelper.DuckLevel = IsCrouching ? 1 : 0.5f;
+		AnimationHelper.DuckLevel = IsCrouching ? IsRolling ? 0f : 1f : 0.5f;
 		AnimationHelper.IsGrounded = CharacterController.IsOnGround;
+		
+		var XYVelocity = CharacterController.Velocity.WithZ(0);
+		if (XYVelocity != Vector3.Zero)
+		{
+			AnimationHelper.WorldRotation = Rotation.LookAt(XYVelocity, Vector3.Up);
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -185,7 +192,6 @@ public sealed class PlayerPawn : Component
 	TimeSince TimeSinceJump = 0;
 	bool HadDoubleJumped = false;
 	bool IsJumping = false;
-	bool IsRolling = false;
 
 	private void TickMovement()
 	{

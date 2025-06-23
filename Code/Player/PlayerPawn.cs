@@ -211,7 +211,6 @@ public sealed class PlayerPawn : Component
 			MaxTickSpeed *= 1.33f;
 		}
 
-		Log.Info(MaxTickSpeed);
 		var WishVel = WishMove * MaxTickSpeed;
 
 		if (CharacterController.IsOnGround)

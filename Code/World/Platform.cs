@@ -61,8 +61,6 @@ public sealed class Platform : Component
 			return;
 		}
 
-		Log.Info($"e {Direction}");
-
 		PlayerPawns.Add(PlayerPawn);
 		MoveDir += Direction;
 	}
@@ -79,8 +77,6 @@ public sealed class Platform : Component
 		{
 			return;
 		}
-
-		Log.Info($"l {Direction}");
 
 		PlayerPawns.Remove(PlayerPawn);
 		MoveDir -= Direction;

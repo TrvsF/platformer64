@@ -107,8 +107,6 @@ public sealed class Goomba : Component
 
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
-			Log.Info($"{PlayerPawn} STOMP");
-
 			KnockbackPlayer(PlayerPawn, 0, true);
 
 			if (CanHaveChildren)
@@ -129,8 +127,6 @@ public sealed class Goomba : Component
 
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
-			Log.Info($"{PlayerPawn} Ouch!");
-
 			KnockbackPlayer(PlayerPawn, 800f, false);
 			PlayerPawn.TakeDamage(25);
 		}

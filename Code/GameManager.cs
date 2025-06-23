@@ -67,6 +67,11 @@ public sealed class GameManager : Component, Component.INetworkListener
 		};
 	}
 
+	public static int GetCollectable(ECollectable CollectableType)
+	{
+		return CollectablesCollected[CollectableType];
+	}
+
 	public static int OnCollect(ECollectable CollectableType, int Collectables = 1)
 	{
 		return CollectablesCollected[CollectableType] += Collectables;
@@ -82,6 +87,19 @@ public sealed class GameManager : Component, Component.INetworkListener
 		}
 
 		return CollectableString;
+	}
+
+	public static bool AreAllDoorsOpen(Scene Scene)
+	{
+		foreach (var Door in Scene.GetAllComponents<Door>())
+		{
+			if (!Door.IsOpen)
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	///////////////////////////////////////////////////////////////////////////

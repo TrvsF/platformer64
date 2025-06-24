@@ -5,7 +5,7 @@
     "Flags": 0,
     "Name": "goomba_lil",
     "Position": "0,0,0",
-    "Rotation": "0,-0,-0.7071068,0.7071068",
+    "Rotation": "0,0,0,1",
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,
@@ -21,7 +21,7 @@
         "Acceleration": 10,
         "Bounciness": 0,
         "GroundAngle": 45,
-        "Height": 64,
+        "Height": 32,
         "IgnoreLayers": "",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -35,7 +35,7 @@
       },
       {
         "__type": "Goomba",
-        "__guid": "3c245e05-739c-412c-b67b-ffd4cf7ef692",
+        "__guid": "d8a083e2-eae8-44df-8ed7-89d52f910821",
         "__enabled": true,
         "BodyBox": {
           "_type": "component",
@@ -56,7 +56,8 @@
         "OnComponentEnabled": null,
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
-        "OnComponentUpdate": null
+        "OnComponentUpdate": null,
+        "Speed": 50
       }
     ],
     "Children": [
@@ -66,7 +67,7 @@
         "Flags": 0,
         "Name": "Body",
         "Position": "0,0,0",
-        "Rotation": "0,0,0,1",
+        "Rotation": "0,0,0.7071067,-0.7071068",
         "Scale": "1,1,1",
         "Tags": "",
         "Enabled": true,
@@ -121,7 +122,7 @@
             "__type": "Sandbox.BoxCollider",
             "__guid": "86e361e1-38af-4194-a2bd-fbde3b9466eb",
             "__enabled": true,
-            "Center": "-0.6667557,4.545172,13.52733",
+            "Center": "-1.618862,-0.9835243,13.52733",
             "Friction": null,
             "IsTrigger": true,
             "OnComponentDestroy": null,
@@ -134,7 +135,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "21.4017,22.03282,27.05465",
+            "Scale": "41.62801,39.3225,27.05465",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"
@@ -148,7 +149,7 @@
         "Flags": 0,
         "Name": "Head",
         "Position": "0,0,0",
-        "Rotation": "0,0,0,1",
+        "Rotation": "0,0,0.7071067,-0.7071068",
         "Scale": "1,1,1",
         "Tags": "enemy",
         "Enabled": true,

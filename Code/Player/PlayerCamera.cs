@@ -26,7 +26,8 @@ public sealed class PlayerCamera : Component
 		TimeSinceNoCameraInput = new();
 	}
 
-	const float ZoomTime = 3f;
+	const float ZoomTime = 10f;
+	Vector3 LastPos = Vector3.Zero;
 	TimeSince TimeSinceNoCameraInput = 0;
 	protected override void OnUpdate()
 	{
@@ -44,6 +45,17 @@ public sealed class PlayerCamera : Component
 		var TargetLocation = TargetPlayer.CameraTarget.WorldPosition;
 		var LookData = Input.AnalogLook * .33f; // magic
 
+		if (LookData == Angles.Zero && LastPos == WorldPosition)
+		{
+			if (TimeSinceNoCameraInput >= ZoomTime)
+			{
+				var Lerp = (TimeSinceNoCameraInput - ZoomTime) * 0.1f;
+				CameraComponent.FieldOfView = MathX.Lerp(Fov, 40f, Lerp);
+			}
+
+			return;
+		}
+		
 		OrbitYaw += LookData.yaw;
 		OrbitPitch += LookData.pitch;
 		OrbitPitch = Math.Clamp(OrbitPitch, MinPitch, MaxPitch);
@@ -54,19 +66,9 @@ public sealed class PlayerCamera : Component
 
 		var CameraRotation = Rotation.LookAt(TargetLocation - WorldPosition);
 		WorldRotation = CameraRotation;
-		
-		if (LookData == Angles.Zero)
-		{
-			if (TimeSinceNoCameraInput >= ZoomTime)
-			{
-				var Lerp = (TimeSinceNoCameraInput - ZoomTime) * 0.1f;
-				CameraComponent.FieldOfView = MathX.Lerp(Fov, 40f, Lerp);
-			}
-
-			return;
-		}
 
 		CameraComponent.FieldOfView = Fov;
 		TimeSinceNoCameraInput = 0;
+		LastPos = WorldPosition;
 	}
 }

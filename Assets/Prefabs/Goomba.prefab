@@ -4,8 +4,8 @@
     "__version": 1,
     "Flags": 0,
     "Name": "goomba",
-    "Position": "2.054411,-10.53447,-0.000003516674",
-    "Rotation": "0,0,-0.7071067,0.7071068",
+    "Position": "-0.1069621,-0.4438672,-0.00002375245",
+    "Rotation": "0,0,-0.7071069,-0.7071066",
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,
@@ -21,7 +21,7 @@
         "Acceleration": 10,
         "Bounciness": 0,
         "GroundAngle": 45,
-        "Height": 64,
+        "Height": 50,
         "IgnoreLayers": "",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -35,7 +35,7 @@
       },
       {
         "__type": "Goomba",
-        "__guid": "ffe08e06-4c60-4d00-922c-0448b5157d7a",
+        "__guid": "8b7ae2b7-1f79-4d1e-ab83-310f3137b0cf",
         "__enabled": true,
         "BodyBox": {
           "_type": "component",
@@ -59,7 +59,8 @@
         "OnComponentEnabled": null,
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
-        "OnComponentUpdate": null
+        "OnComponentUpdate": null,
+        "Speed": 30
       }
     ],
     "Children": [
@@ -68,8 +69,8 @@
         "__version": 1,
         "Flags": 0,
         "Name": "Body",
-        "Position": "0,0,0",
-        "Rotation": "0,0,0,1",
+        "Position": "0.1897578,-10.08929,0",
+        "Rotation": "-0,0,0.7071069,-0.7071066",
         "Scale": "1,1,1",
         "Tags": "",
         "Enabled": true,
@@ -124,7 +125,7 @@
             "__type": "Sandbox.BoxCollider",
             "__guid": "86e361e1-38af-4194-a2bd-fbde3b9466eb",
             "__enabled": true,
-            "Center": "-10.16484,1.217153,22.477",
+            "Center": "-8.899971,0.2852306,22.477",
             "Friction": null,
             "IsTrigger": true,
             "OnComponentDestroy": null,
@@ -137,7 +138,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "26.58339,32.54678,44.954",
+            "Scale": "40.05703,54.55802,44.954",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"
@@ -150,8 +151,8 @@
         "__version": 1,
         "Flags": 0,
         "Name": "Head",
-        "Position": "0,0,0",
-        "Rotation": "0,0,0,1",
+        "Position": "0.1897578,-10.08929,0",
+        "Rotation": "-0,0,0.7071069,-0.7071066",
         "Scale": "1,1,1",
         "Tags": "enemy",
         "Enabled": true,

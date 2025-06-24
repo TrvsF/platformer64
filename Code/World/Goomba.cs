@@ -7,7 +7,7 @@ enum EAIState
 {
 	Idle,
 	Spawn,
-	Wonder,
+	Wander,
 	Chase,
 }
 
@@ -19,11 +19,14 @@ public sealed class Goomba : Component
 	[Property] public bool CanHaveChildren { get; set; } = false;
 	[Property] public GameObject ChildPrefab { get; set; }
 
+	[Property] public int Speed { get; set; } = 30;
+
 	[RequireComponent] public CharacterController CharacterController { get; private set; }
 
 	private TimeSince TimeSinceSpawn = 0;
 	private bool IsDead = false;
 
+	private Vector3 SpawnLocation = Vector3.Zero;
 	protected override void OnStart()
 	{
 		base.OnStart();
@@ -32,15 +35,21 @@ public sealed class Goomba : Component
 		BodyBox.OnTriggerEnter += OnBodyCollide;
 
 		TimeSinceSpawn = 0;
+		SpawnLocation = WorldPosition;
 	}
 
-	private EAIState AIState = EAIState.Idle;
+	////////////////////////////////////////////////////////////////
+
+	private EAIState AIState = EAIState.Wander;
 
 	// called when spawned as a child
 	public void OnSpawn()
 	{
 		AIState = EAIState.Spawn;
 	}
+
+	private TimeSince TimeSinceWanderLocationChange = 999;
+	private PlayerPawn ChasePlayer = null;
 
 	protected override void OnFixedUpdate()
 	{
@@ -53,19 +62,96 @@ public sealed class Goomba : Component
 
 		switch (AIState)
 		{
+
+			// done when 'relicating', burst out from parent & spin for a bit
 			case EAIState.Spawn:
+				if (CharacterController.Velocity.Length <= 5)
+				{
+					SetStateWander();
+					break;
+				}
+
 				// slow them down as they yeet out
 				var VelX = MathX.Lerp(CharacterController.Velocity.x, 0, .05f);
 				var VelY = MathX.Lerp(CharacterController.Velocity.y, 0, .05f);
 
 				CharacterController.Velocity = new(VelX, VelY, CharacterController.Velocity.z);
-				// spin them round too
-				var Yaw = GameObject.WorldRotation.Yaw();
-				GameObject.WorldRotation = Rotation.FromYaw(Yaw + Random.Shared.Int(0, 5));
+
+				// spin
+				var Yaw = WorldRotation.Yaw();
+				WorldRotation = Rotation.FromYaw(Yaw + Random.Shared.Int(0, 5));
+
+				// check vel
 				break;
-			case EAIState.Wonder:
-				CharacterController.Velocity = Vector3.Left * 50 * Rotation.FromYaw(WorldRotation.Yaw());
+
+			// wander round in short bursts, dont tred too far from the spawn location
+			// if someone gets close chase them KILL
+			case EAIState.Wander:
+				const int MaxWanderDistance = 333;
+
+				// check for someone to KILL
+				const float MaxPlayerChaseDistance = 100f;
+				if (WorldUtil.GetClosestPlayerInRange(Scene, WorldPosition, MaxPlayerChaseDistance, out var PlayerPawn))
+				{
+					ChasePlayer = PlayerPawn;
+
+					FaceLocation(ChasePlayer.WorldPosition);
+					MoveForward();
+
+					AIState = EAIState.Chase;
+					break;
+				}
+
+				if (TimeSinceWanderLocationChange > Random.Shared.Int(10, 30))
+				{
+					TimeSinceWanderLocationChange = 0;
+
+					// if we're too far return home
+					var DistanceFromSpawn = Vector3.DistanceBetween(SpawnLocation, WorldPosition);
+					if (DistanceFromSpawn > MaxWanderDistance)
+					{
+						FaceLocation(SpawnLocation);
+						MoveForward();
+
+						break;
+					}
+
+					WorldRotation = Rotation.FromYaw(Random.Shared.Int(0, 360));
+					MoveForward();
+				}
+
 				break;
+
+			// we're chasing someone, periodically check 
+			case EAIState.Chase:
+				if (!ChasePlayer.IsValid())
+				{
+					SetStateWander();
+					break;
+				}
+
+				var DistanceToPlayer = Vector3.DistanceBetween(WorldPosition, ChasePlayer.WorldPosition);
+				if (DistanceToPlayer > 250)
+				{
+					SetStateWander();
+				}
+				else
+				{
+					FaceLocation(ChasePlayer.WorldPosition);
+					MoveForward();
+				}
+
+				break;
+		}
+
+		// make sure we're not gonna fall off a ledge or run into a wall
+		var LedgePosition = WorldPosition + (WorldRotation.Forward * 100f);
+		var LedgeTrace = Scene.Trace.Ray(LedgePosition, LedgePosition + Vector3.Down * 100f).IgnoreGameObject(GameObject).Run();
+		var WallTrace = Scene.Trace.Ray(WorldPosition, LedgePosition).IgnoreGameObject(GameObject).WithoutTags("player").Run();
+		if (!LedgeTrace.Hit || WallTrace.Hit)
+		{
+			WorldRotation = Rotation.FromYaw(WorldRotation.Yaw() + 180f);
+			MoveForward();
 		}
 
 		if (!CharacterController.IsOnGround)
@@ -73,23 +159,29 @@ public sealed class Goomba : Component
 			CharacterController.Velocity -= GameManager.Gravity * Time.Delta;
 		}
 
-		if (CharacterController.Velocity == 0)
-		{
-			AIState = EAIState.Wonder;
-		}
-
-		if (AIState == EAIState.Wonder)
-		{
-			CheckForPlayer();
-		}
-
 		CharacterController.Move();
 	}
 
-	private void CheckForPlayer()
+	private void FaceLocation(Vector3 Location)
 	{
-
+		var RotationTowardPlayer = Rotation.LookAt(Location - WorldPosition, Vector3.Up);
+		WorldRotation = Rotation.FromYaw(RotationTowardPlayer.Yaw());
 	}
+
+	private void SetStateWander()
+	{
+		WorldRotation = Rotation.FromYaw(Random.Shared.Int(0, 360));
+		MoveForward();
+
+		AIState = EAIState.Wander;
+	}
+
+	private void MoveForward()
+	{
+		CharacterController.Velocity = Vector3.Forward * Speed * Rotation.FromYaw(WorldRotation.Yaw());
+	}
+
+	////////////////////////////////////////////////////////////////
 
 	private void OnHeadCollide(Collider Collider)
 	{
@@ -154,6 +246,8 @@ public sealed class Goomba : Component
 
 		Player.CharacterController.Punch(Knockback);
 	}
+
+	////////////////////////////////////////////////////////////////
 
 	private readonly List<Vector3> ChildSpawnVelocities =
 	[

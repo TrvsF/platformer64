@@ -230,7 +230,7 @@
       },
       "__PrefabIdToInstanceId": {
         "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "664f6931-79f2-48bb-978d-f0829e710e19",
-        "ffe08e06-4c60-4d00-922c-0448b5157d7a": "45f8925b-b6d7-4fdd-89fe-8c9d64101f1f",
+        "c388807f-683c-4dbc-aeb4-3af4e415cfe4": "2388c91f-effb-4548-acf1-d6bda1f3440c",
         "d16a3270-e967-4be4-80b4-2a360f05bdff": "3604348b-3024-4c07-afe4-8501400db6b9",
         "c995ae5f-33c7-4595-aa68-d4614a040a31": "932b0728-a4c9-4f0b-b6e4-083df5d65837",
         "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "9ca23535-849d-4c50-ad02-d60847ee62c8",
@@ -276,7 +276,7 @@
       },
       "__PrefabIdToInstanceId": {
         "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "6ed30800-b934-43c9-8a08-98093a922e00",
-        "ffe08e06-4c60-4d00-922c-0448b5157d7a": "ea9ebb2b-5e78-47e8-90f1-5ddf64ab61b4",
+        "c388807f-683c-4dbc-aeb4-3af4e415cfe4": "0329fe3a-4d8f-4302-850b-5c82ed6bc02b",
         "d16a3270-e967-4be4-80b4-2a360f05bdff": "d97aa2b4-9256-4455-b40e-2e6949ed8667",
         "c995ae5f-33c7-4595-aa68-d4614a040a31": "8a5a4ff3-f384-474c-8926-8cb677baec5a",
         "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "81c7bbcb-445d-406c-bc1a-e2084cc9badc",
@@ -314,7 +314,7 @@
       },
       "__PrefabIdToInstanceId": {
         "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "cd4dbda1-bd7a-4607-a3bc-959a6e69a99b",
-        "ffe08e06-4c60-4d00-922c-0448b5157d7a": "2296af21-b189-4b10-abb1-f38c533e1222",
+        "c388807f-683c-4dbc-aeb4-3af4e415cfe4": "56cb12a9-31c4-407b-a2e5-26be5944d563",
         "d16a3270-e967-4be4-80b4-2a360f05bdff": "80525096-4514-4a4d-b53c-aaceda20f265",
         "c995ae5f-33c7-4595-aa68-d4614a040a31": "71f54e3b-786b-444a-8ea6-e887f0a76230",
         "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "15e5e698-677d-47ee-84d0-a627df3c745e",
@@ -468,7 +468,44 @@
         "241b8c83-c135-4dbc-b38a-6a9b11225417": "6fe3f8e8-54ab-4489-bd65-f5cbbab809a1",
         "88a4ce4e-7aab-47c5-8280-674f0438d24b": "6b707c27-14fc-419c-ba02-ba40f7cdd86e",
         "d0e8b6e8-d392-4878-8222-b274ce56806b": "0b9c13a7-7463-4ad5-bd2b-8d86d9eb24ce",
-        "9641d8fd-eb32-4655-9e8d-3f89369080d7": "c9854b03-5f15-48ac-bd3a-0f600ebe990c"
+        "9641d8fd-eb32-4655-9e8d-3f89369080d7": "c9854b03-5f15-48ac-bd3a-0f600ebe990c",
+        "e705b0af-1721-4cf7-8e91-4e7db0d8476a": "07bd7dd1-b62b-4ceb-b16f-b4f7ec0a7c29"
+      }
+    },
+    {
+      "__guid": "a6834a3a-429b-48d7-ad5a-ff4f50474078",
+      "__version": 1,
+      "__Prefab": "prefabs/chip.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Position",
+            "Value": "-1341.787,558.1045,258.4735"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Rotation",
+            "Value": "0,0,0,0.9999999"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "3ef14104-0b81-4f85-983e-9a10063a4df9": "a6834a3a-429b-48d7-ad5a-ff4f50474078",
+        "de0b0ff0-4abe-4e31-af42-04ced7275a3a": "1e944706-a787-4a7a-952a-963d0f689e7b",
+        "e42b6ad0-fb56-47d9-9e87-b1bff18569d1": "d2618460-fa7b-4288-988b-de0b7e133577",
+        "e888936a-e647-4b70-8569-a607de6e3fe5": "30232333-a5d7-4a86-b5c7-3b7f3c823f69",
+        "9d861cbf-b6f9-4474-ae5f-166aa9c06db6": "0cf18cc1-1dd3-464d-89f6-9bfffa6ae48f",
+        "8785f47c-881c-4912-a38f-f80cf7f624f6": "b63aa966-6ced-47fa-8029-6926bf5273de"
       }
     }
   ],

@@ -13,7 +13,47 @@
     "NetworkInterpolation": true,
     "NetworkOrphaned": 0,
     "OwnerTransfer": 1,
-    "Components": [],
+    "Components": [
+      {
+        "__type": "Chip",
+        "__guid": "de0b0ff0-4abe-4e31-af42-04ced7275a3a",
+        "__enabled": true,
+        "BodyBox": {
+          "_type": "component",
+          "component_id": "8785f47c-881c-4912-a38f-f80cf7f624f6",
+          "go": "e888936a-e647-4b70-8569-a607de6e3fe5",
+          "component_type": "BoxCollider"
+        },
+        "CanHaveChildren": false,
+        "ChildPrefab": null,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Speed": 80
+      },
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "e42b6ad0-fb56-47d9-9e87-b1bff18569d1",
+        "__enabled": true,
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Radius": 16,
+        "StepHeight": 18,
+        "UseCollisionRules": false
+      }
+    ],
     "Children": [
       {
         "__guid": "e888936a-e647-4b70-8569-a607de6e3fe5",
@@ -71,6 +111,28 @@
             },
             "Tint": "1,1,1,1",
             "UseAnimGraph": true
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "8785f47c-881c-4912-a38f-f80cf7f624f6",
+            "__enabled": true,
+            "Center": "0,0,0",
+            "Friction": null,
+            "IsTrigger": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "Scale": "175,25,25",
+            "Static": false,
+            "Surface": null,
+            "SurfaceVelocity": "0,0,0"
           }
         ],
         "Children": []

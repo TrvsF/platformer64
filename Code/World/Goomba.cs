@@ -3,44 +3,24 @@ using Sandbox.Diagnostics;
 using System;
 using System.ComponentModel.Design.Serialization;
 
-enum EAIState
-{
-	Idle,
-	Spawn,
-	Wander,
-	Chase,
-}
+namespace Sandbox;
 
-public sealed class Goomba : Component
+public sealed class Goomba : AiComponent
 {
 	[Property] public BoxCollider HeadBox { get; set; }
 	[Property] public BoxCollider BodyBox { get; set; }
 
-	[Property] public bool CanHaveChildren { get; set; } = false;
-	[Property] public GameObject ChildPrefab { get; set; }
-
-	[Property] public int Speed { get; set; } = 30;
-
-	[RequireComponent] public CharacterController CharacterController { get; private set; }
-
-	private TimeSince TimeSinceSpawn = 0;
-	private bool IsDead = false;
-
-	private Vector3 SpawnLocation = Vector3.Zero;
 	protected override void OnStart()
 	{
 		base.OnStart();
 
+		AIState = EAIState.Wander;
+
 		HeadBox.OnTriggerEnter += OnHeadCollide;
 		BodyBox.OnTriggerEnter += OnBodyCollide;
-
-		TimeSinceSpawn = 0;
-		SpawnLocation = WorldPosition;
 	}
 
 	////////////////////////////////////////////////////////////////
-
-	private EAIState AIState = EAIState.Wander;
 
 	// called when spawned as a child
 	public void OnSpawn()
@@ -158,27 +138,6 @@ public sealed class Goomba : Component
 		{
 			CharacterController.Velocity -= GameManager.Gravity * Time.Delta;
 		}
-
-		CharacterController.Move();
-	}
-
-	private void FaceLocation(Vector3 Location)
-	{
-		var RotationTowardPlayer = Rotation.LookAt(Location - WorldPosition, Vector3.Up);
-		WorldRotation = Rotation.FromYaw(RotationTowardPlayer.Yaw());
-	}
-
-	private void SetStateWander()
-	{
-		WorldRotation = Rotation.FromYaw(Random.Shared.Int(0, 360));
-		MoveForward();
-
-		AIState = EAIState.Wander;
-	}
-
-	private void MoveForward()
-	{
-		CharacterController.Velocity = Vector3.Forward * Speed * Rotation.FromYaw(WorldRotation.Yaw());
 	}
 
 	////////////////////////////////////////////////////////////////
@@ -199,7 +158,7 @@ public sealed class Goomba : Component
 
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
-			KnockbackPlayer(PlayerPawn, 0, true);
+			WorldUtil.KnockbackPlayer(PlayerPawn, 0, true);
 
 			if (CanHaveChildren)
 			{
@@ -219,32 +178,9 @@ public sealed class Goomba : Component
 
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
-			KnockbackPlayer(PlayerPawn, 800f, false);
+			WorldUtil.KnockbackPlayer(PlayerPawn, 800f, false);
 			PlayerPawn.TakeDamage(25);
 		}
-	}
-
-	private void KnockbackPlayer(PlayerPawn Player, float Magnatude, bool IsStomp = false)
-	{
-		if (Player.IsInvunrable())
-		{
-			return;
-		}
-
-		var VelocityInverse = Player.CharacterController.Velocity * -1f;
-		var VelocityInverseNormal = VelocityInverse.Normal;
-		var Knockback = VelocityInverseNormal * Magnatude;
-
-		if (IsStomp)
-		{
-			Knockback = Knockback.WithZ(650f);
-		}
-		else
-		{
-			Player.CharacterController.Velocity = 0;
-		}
-
-		Player.CharacterController.Punch(Knockback);
 	}
 
 	////////////////////////////////////////////////////////////////

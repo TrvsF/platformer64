@@ -34,8 +34,8 @@
         "UseCollisionRules": false
       },
       {
-        "__type": "Goomba",
-        "__guid": "d8a083e2-eae8-44df-8ed7-89d52f910821",
+        "__type": "Sandbox.Goomba",
+        "__guid": "3eb515a5-45e4-49c8-97c4-d5a2070421f5",
         "__enabled": true,
         "BodyBox": {
           "_type": "component",

@@ -1,3 +1,6 @@
+@using System;
+@using Sandbox.UI;
+
 @inherits PanelComponent
 
 <root>
@@ -12,6 +15,8 @@
 	<label class="health">
 		@(Player.Health)	
 	</label>
+
+	<PauseMenu />
 </root>
 
 @code
@@ -25,6 +30,6 @@
 
 	protected override int BuildHash()
 	{
-		return (Time.Now * 100f).CeilToInt();
+		return HashCode.Combine(Time.Now);
 	}
 }

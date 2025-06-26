@@ -1,3 +1,4 @@
+using KOTH;
 using Sandbox;
 using Sandbox.Citizen;
 using Sandbox.Diagnostics;
@@ -13,8 +14,9 @@ public sealed class PlayerPawn : Component
 	[Property] public GameObject CameraTopBound { get; set; }
 	[Property] public GameObject CameraLowBound { get; set; }
 
-	[RequireComponent] public CharacterController CharacterController { get; private set; }
-	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; private set; }
+	[RequireComponent] public CharacterController CharacterController { get; set; }
+	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; }
+	[RequireComponent] public PlayerDresser PlayerDresser { get; set; }
 
 	[Sync] public float Yaw { get; private set; } = 0f;
 	[Sync] public bool IsCrouching { get; private set; } = false;

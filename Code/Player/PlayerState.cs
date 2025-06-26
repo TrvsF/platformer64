@@ -61,4 +61,24 @@ public sealed class PlayerState : Component
 
 		PlayerPawn = SpawnPlayerPawnComponent;
 	}
+
+	public bool IsPaused { get; set; } = false;
+
+	// HACK : doing the pause here because we can't listen
+	// to Input.EscapePressed within the UI update method..
+	protected override void OnUpdate()
+	{
+		base.OnUpdate();
+
+		if (Local != this)
+		{
+			return;
+		}
+
+		if (Input.EscapePressed)
+		{
+			Input.EscapePressed = false;
+			IsPaused = !IsPaused;
+		}
+	}
 }

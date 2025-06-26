@@ -8,6 +8,7 @@ public abstract class AiComponent : Component
 	[Property] public bool CanHaveChildren { get; set; } = false;
 	[Property] public GameObject ChildPrefab { get; set; }
 
+	[Property] public int Damage { get; set; } = 25;
 	[Property] public int Speed { get; set; } = 30;
 
 	[RequireComponent] public CharacterController CharacterController { get; set; }

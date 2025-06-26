@@ -1,0 +1,31 @@
+@using System;
+@using Sandbox.UI;
+
+@inherits Panel
+
+<root class="hidden flex absolute inset-0 align-center justify-center">
+	<div onclick="@(() => {PlayerState.Local.IsPaused = false;})">Resume</div>
+	<div onclick="@(() => {CreateLobby();})">Create Lobby</div>
+	<div onclick="@(() => {Game.Close();})">Quit</div>
+</root>
+
+@code
+{
+	private void CreateLobby()
+	{
+		Networking.CreateLobby();
+	}
+
+	public bool IsActive { get; set; }
+
+	public override void Tick()
+	{
+		IsActive = PlayerState.Local.IsPaused;
+		SetClass("visible", PlayerState.Local.IsPaused);
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(Time.Now);
+	}
+}

@@ -26,6 +26,7 @@
         },
         "CanHaveChildren": false,
         "ChildPrefab": null,
+        "Damage": 50,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,

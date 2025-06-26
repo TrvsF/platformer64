@@ -179,7 +179,7 @@ public sealed class Goomba : AiComponent
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
 			WorldUtil.KnockbackPlayer(PlayerPawn, 800f, false);
-			PlayerPawn.TakeDamage(25);
+			PlayerPawn.TakeDamage(Damage);
 		}
 	}
 

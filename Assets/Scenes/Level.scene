@@ -47,10 +47,10 @@
       "Scale": "1,1,1",
       "Tags": "",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
+      "NetworkMode": 1,
+      "NetworkInterpolation": false,
+      "NetworkOrphaned": 1,
+      "OwnerTransfer": 0,
       "Components": [
         {
           "__type": "GameManager",
@@ -495,6 +495,38 @@
             },
             "Property": "Rotation",
             "Value": "0,0,0,0.9999999"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "NetworkMode",
+            "Value": 1
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "NetworkOrphaned",
+            "Value": 1
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "OwnerTransfer",
+            "Value": 0
+          },
+          {
+            "Target": {
+              "Type": "Component",
+              "IdValue": "de0b0ff0-4abe-4e31-af42-04ced7275a3a"
+            },
+            "Property": "Speed",
+            "Value": 250
           }
         ],
         "MovedObjects": []

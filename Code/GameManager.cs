@@ -33,13 +33,8 @@ public sealed class GameManager : Component, Component.INetworkListener
 		{
 			return;
 		}
-	}
 
-	protected override void OnEnabled()
-	{
-		base.OnEnabled();
-
-		if (NetworkMode == EGameNetworkMode.Singleplayer)
+		if (!IsProxy)
 		{
 			StartClient(Connection.Local);
 		}
@@ -171,6 +166,8 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	void INetworkListener.OnActive(Connection ConnectionChannel)
 	{
+		Assert.True(Networking.IsHost);
+
 		Log.Info($"Connection activating with name = {ConnectionChannel.DisplayName}:{ConnectionChannel.Ping} | is host = {ConnectionChannel.IsHost}");
 
 		// HACK : to stop the host creating another state if they create a lobby in a singleplayer session

@@ -4,7 +4,7 @@ using System.Diagnostics;
 public enum ECollectable
 {
 	Disc,
-	Fast,
+	Egg,
 }
 
 public sealed class Collectable : Component

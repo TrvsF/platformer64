@@ -38,8 +38,7 @@ public sealed class Platform : Component
 			Player.GameObject.Root.WorldPosition += MoveDir;
 		}
 
-		const int PhysicsTicks = 50;
-		Rigidbody.Velocity = MoveDir * PhysicsTicks;
+		Rigidbody.Velocity = MoveDir * 50;
 	}
 
 	private void BindBox(BoxCollider Box, Vector3 Direction)

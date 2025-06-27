@@ -5,7 +5,17 @@
 
 <root class="hidden flex absolute inset-0 align-center justify-center">
 	<div onclick="@(() => {PlayerState.Local.IsPaused = false;})">Resume</div>
+	@if (!Networking.IsActive)
+	{
 	<div onclick="@(() => {CreateLobby();})">Create Lobby</div>
+	}
+	@if (Networking.IsActive) // still dont know how to do elses
+	{
+		@foreach (var PlayerState in GameManager.PlayerStates)
+		{
+			<div>@(PlayerState.SteamName)</div>
+		}
+	}
 	<div onclick="@(() => {Game.Close();})">Quit</div>
 </root>
 
@@ -13,7 +23,7 @@
 {
 	private void CreateLobby()
 	{
-		Networking.CreateLobby();
+		GameManager.CreateLobby($"{PlayerState.Local.SteamName}'s awesome lobby");
 	}
 
 	public bool IsActive { get; set; }

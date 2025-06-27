@@ -24,7 +24,7 @@ public sealed class Chip : AiComponent
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
 			WorldUtil.KnockbackPlayer(PlayerPawn, 800f, false);
-			PlayerPawn.TakeDamage(Damage);
+			PlayerPawn.TakeDamage_ServerOnly(Damage);
 		}
 	}
 

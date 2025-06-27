@@ -45,6 +45,7 @@
         },
         "CanHaveChildren": false,
         "ChildPrefab": null,
+        "Damage": 25,
         "HeadBox": {
           "_type": "component",
           "component_id": "74e334a6-26f3-45fe-94c7-093682fc7729",
@@ -57,7 +58,8 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "Speed": 50
+        "Speed": 50,
+        "StompSound": "sound/stomp.sound"
       }
     ],
     "Children": [

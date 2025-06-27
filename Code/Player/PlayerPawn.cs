@@ -14,6 +14,9 @@ public sealed class PlayerPawn : Component
 	[Property] public GameObject CameraTopBound { get; set; }
 	[Property] public GameObject CameraLowBound { get; set; }
 
+	[Property] public SoundEvent Jump1Sound { get; set; }
+	[Property] public SoundEvent Jump2Sound { get; set; }
+
 	[RequireComponent] public CharacterController CharacterController { get; set; }
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; }
 	[RequireComponent] public PlayerDresser PlayerDresser { get; set; }
@@ -89,14 +92,17 @@ public sealed class PlayerPawn : Component
 	const float DamageCooldownTime = 0.8f;
 	public TimeSince TimeSinceHealthChange = 0;
 	public int Health { get; private set; } = 100;
+	public event Action OnDeath;
 
 	public bool IsInvunrable()
 	{
 		return TimeSinceHealthChange < DamageCooldownTime;
 	}
 
-	public void TakeDamage(int Damage)
+	public void TakeDamage_ServerOnly(int Damage)
 	{
+		Assert.True(Networking.IsHost);
+
 		if (IsInvunrable())
 		{
 			return;
@@ -107,12 +113,15 @@ public sealed class PlayerPawn : Component
 
 		if (Health <= 0)
 		{
-			Kill();
+			Kill_ServerOnly();
 		}
 	}
 
-	private void Kill()
+	private void Kill_ServerOnly()
 	{
+		Assert.True(Networking.IsHost);
+
+		OnDeath?.Invoke();
 		DestroyGameObject();
 	}
 
@@ -210,7 +219,7 @@ public sealed class PlayerPawn : Component
 		var MaxTickSpeed = IsCrouching && !IsRolling ? MaxCrouchSpeed : MaxSpeed;
 		if (IsRolling)
 		{
-			MaxTickSpeed *= 1.33f;
+			MaxTickSpeed *= 1.8f;
 		}
 
 		var WishVel = WishMove * MaxTickSpeed;
@@ -273,6 +282,9 @@ public sealed class PlayerPawn : Component
 			{
 				HadDoubleJumped = false;
 			}
+
+			var Sound = new FSound(HadDoubleJumped ? Jump2Sound : Jump1Sound, WorldPosition, this, true);
+			AudioComponent.PlaySound(Sound);
 
 			var PunchVector = Vector3.Up * JumpStrength;
 			if (HadDoubleJumped)

@@ -49,17 +49,35 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	///////////////////////////////////////////////////////////////////////////
 
+	private TimeSince TimeSinceStart;
+	private static Dictionary<ECollectable, int> CollectableQuantities;
 	private static Dictionary<ECollectable, int> CollectablesCollected;
 
 	protected override void OnStart()
 	{
 		base.OnStart();
 
+		if (!Networking.IsHost)
+		{
+			return;
+		}
+
+		CollectableQuantities = new()
+		{
+			{ ECollectable.Disc, 0 },
+			{ ECollectable.Egg, 0 },
+		};
+
+		foreach (var Collectable in Scene.GetAllComponents<Collectable>())
+		{
+			++CollectableQuantities[Collectable.CollectableType];
+		}
+
 		CollectablesCollected = new()
 		{
 			{ ECollectable.Disc, 0 },
-			{ ECollectable.Fast, 0 },
-		};
+			{ ECollectable.Egg, 0 },
+		}; 
 	}
 
 	public static int GetCollectable(ECollectable CollectableType)
@@ -69,7 +87,13 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	public static int OnCollect(ECollectable CollectableType, int Collectables = 1)
 	{
-		return CollectablesCollected[CollectableType] += Collectables;
+		var Num = CollectablesCollected[CollectableType] += Collectables;
+		if (Num >= CollectableQuantities[CollectableType])
+		{
+			Log.Info($"found all of {CollectableType}!!!");
+		}
+		
+		return Num;
 	}
 
 	public static string GetCollectableString()
@@ -104,7 +128,7 @@ public sealed class GameManager : Component, Component.INetworkListener
 		LobbyConfig Config = new();
 		Config.Name = LobbyName;
 		Config.DestroyWhenHostLeaves = false;
-		Config.MaxPlayers = 16;
+		Config.MaxPlayers = 4;
 		Config.Privacy = Privacy;
 
 		Networking.CreateLobby(Config);
@@ -114,7 +138,7 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	///////////////////////////////////////////////////////////////////////////
 
-	private Transform GetRandomPlayerSpawn()
+	public static Transform GetRandomPlayerSpawn()
 	{
 		Assert.NotNull(Game.ActiveScene);
 
@@ -125,7 +149,7 @@ public sealed class GameManager : Component, Component.INetworkListener
 	private void StartClient(Connection ConnectionChannel)
 	{
 		bool CreatedPlayerState = CreatePlayerState_ServerOnly(ConnectionChannel, out GameObject PlayerState, out PlayerState PlayerStateComponent);
-		PlayerStateComponent.SpawnPlayerPawn_ServerOnly(ConnectionChannel, GetRandomPlayerSpawn());
+		PlayerStateComponent.SpawnPlayerPawn_ServerOnly(GetRandomPlayerSpawn());
 
 		if (!CreatedPlayerState)
 		{

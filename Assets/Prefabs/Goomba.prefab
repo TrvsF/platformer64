@@ -48,6 +48,7 @@
           "_type": "gameobject",
           "prefab": "prefabs/goomba_lil.prefab"
         },
+        "Damage": 25,
         "HeadBox": {
           "_type": "component",
           "component_id": "74e334a6-26f3-45fe-94c7-093682fc7729",
@@ -60,7 +61,8 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "Speed": 30
+        "Speed": 30,
+        "StompSound": "sound/stomp.sound"
       }
     ],
     "Children": [

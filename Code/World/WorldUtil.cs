@@ -15,6 +15,7 @@ public sealed class WorldUtil
 	{
 		if (Player.IsInvunrable())
 		{
+			Log.Info("aaa");
 			return;
 		}
 

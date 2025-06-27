@@ -43,7 +43,18 @@ public sealed class PlayerState : Component
 		Local = this;
 	}
 
-	public void SpawnPlayerPawn_ServerOnly(Connection OwningConnection, Transform SpawnTransform)
+	public void OnKill()
+	{
+		HostRequestServerSpawn();
+	}
+
+	[Rpc.Host]
+	private void HostRequestServerSpawn()
+	{
+		SpawnPlayerPawn_ServerOnly(GameManager.GetRandomPlayerSpawn());
+	}
+
+	public void SpawnPlayerPawn_ServerOnly(Transform SpawnTransform)
 	{
 		Assert.True(Networking.IsHost);
 
@@ -53,13 +64,14 @@ public sealed class PlayerState : Component
 		var SpawnPlayerPawnComponent = SpawnPlayerPawnPrefab.Components.Get<PlayerPawn>();
 		Assert.NotNull(SpawnPlayerPawnComponent);
 
-		if (!SpawnPlayerPawnPrefab.NetworkSpawn(OwningConnection))
+		if (!SpawnPlayerPawnPrefab.NetworkSpawn(Connection))
 		{
 			SpawnPlayerPawnPrefab.Destroy();
 			return;
 		}
 
 		PlayerPawn = SpawnPlayerPawnComponent;
+		PlayerPawn.OnDeath += OnKill;
 	}
 
 	public bool IsPaused { get; set; } = false;

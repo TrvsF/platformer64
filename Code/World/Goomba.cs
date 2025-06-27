@@ -10,6 +10,8 @@ public sealed class Goomba : AiComponent
 	[Property] public BoxCollider HeadBox { get; set; }
 	[Property] public BoxCollider BodyBox { get; set; }
 
+	[Property] public SoundEvent StompSound { get; set; }
+
 	protected override void OnStart()
 	{
 		base.OnStart();
@@ -70,7 +72,7 @@ public sealed class Goomba : AiComponent
 				const int MaxWanderDistance = 333;
 
 				// check for someone to KILL
-				const float MaxPlayerChaseDistance = 100f;
+				const float MaxPlayerChaseDistance = 200f;
 				if (WorldUtil.GetClosestPlayerInRange(Scene, WorldPosition, MaxPlayerChaseDistance, out var PlayerPawn))
 				{
 					ChasePlayer = PlayerPawn;
@@ -111,7 +113,7 @@ public sealed class Goomba : AiComponent
 				}
 
 				var DistanceToPlayer = Vector3.DistanceBetween(WorldPosition, ChasePlayer.WorldPosition);
-				if (DistanceToPlayer > 250)
+				if (DistanceToPlayer > 600)
 				{
 					SetStateWander();
 				}
@@ -130,7 +132,7 @@ public sealed class Goomba : AiComponent
 		var WallTrace = Scene.Trace.Ray(WorldPosition, LedgePosition).IgnoreGameObject(GameObject).WithoutTags("player").Run();
 		if (!LedgeTrace.Hit || WallTrace.Hit)
 		{
-			WorldRotation = Rotation.FromYaw(WorldRotation.Yaw() + 180f);
+			WorldRotation = Rotation.FromYaw(WorldRotation.Yaw() + 30f);
 			MoveForward();
 		}
 
@@ -160,12 +162,15 @@ public sealed class Goomba : AiComponent
 		{
 			WorldUtil.KnockbackPlayer(PlayerPawn, 0, true);
 
+			var Sound = new FSound(StompSound, WorldPosition, PlayerPawn, false);
+			AudioComponent.PlaySound(Sound);
+
 			if (CanHaveChildren)
 			{
 				SpawnChildren();
 			}
 
-			DestroyGameObject();
+			DestroyGameObject(); // TODO : this is causing hitches in editor!!!
 		}
 	}
 
@@ -179,7 +184,7 @@ public sealed class Goomba : AiComponent
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
 			WorldUtil.KnockbackPlayer(PlayerPawn, 800f, false);
-			PlayerPawn.TakeDamage(Damage);
+			PlayerPawn.TakeDamage_ServerOnly(Damage);
 		}
 	}
 
@@ -203,7 +208,7 @@ public sealed class Goomba : AiComponent
 			var SpawnedGoomba = SpawnPlayerPawnPrefab.Components.Get<Goomba>();
 			Assert.NotNull(SpawnedGoomba);
 
-			SpawnedGoomba.CharacterController.Velocity = ChildSpawnVelocities[QuaterChildIndex];
+			SpawnedGoomba.CharacterController.Velocity = ChildSpawnVelocities[QuaterChildIndex] * 20;
 			SpawnedGoomba.OnSpawn();
 
 			if (!SpawnPlayerPawnPrefab.NetworkSpawn(Connection.Host))

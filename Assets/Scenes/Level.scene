@@ -693,14 +693,6 @@
             },
             "Property": "Position",
             "Value": "-1172.992,846.49,-873.0265"
-          },
-          {
-            "Target": {
-              "Type": "GameObject",
-              "IdValue": "455bea82-f69a-4771-9913-a5ccea08172a"
-            },
-            "Property": "Rotation",
-            "Value": "0,0,0,0.9999999"
           }
         ],
         "MovedObjects": []
@@ -716,7 +708,7 @@
       "__version": 1,
       "Flags": 0,
       "Name": "Camera",
-      "Position": "856.4738,1791.76,1200.409",
+      "Position": "1065.274,1649.06,1602.507",
       "Rotation": "0.1531562,0.08542091,-0.8598131,0.4795497",
       "Scale": "1,1,1",
       "Tags": "maincamera",
@@ -939,6 +931,440 @@
           "Children": []
         }
       ]
+    },
+    {
+      "__guid": "3848d537-9a76-463f-b6c4-982184d55671",
+      "__version": 1,
+      "__Prefab": "prefabs/goomba.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Name",
+            "Value": "goomba (5)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Position",
+            "Value": "769.8358,-1543.186,208.3624"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Rotation",
+            "Value": "-0.1226851,0.1226852,-0.6963823,-0.6963823"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "3848d537-9a76-463f-b6c4-982184d55671",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "3034787c-5523-4da5-af81-e425fa33c71f",
+        "c388807f-683c-4dbc-aeb4-3af4e415cfe4": "0e9aedf9-8fd4-431f-8a6d-23b007b3e4b9",
+        "c995ae5f-33c7-4595-aa68-d4614a040a31": "8cdbc1ee-c3bb-4ac8-9f32-d2080f1222f2",
+        "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "6171b98a-4a3c-40ef-a734-ae44e0eeb039",
+        "86e361e1-38af-4194-a2bd-fbde3b9466eb": "f86c636c-2839-4711-9be5-3f90655afb1e",
+        "85429795-64a2-4ff3-9892-616c26963679": "1f0998f6-6aad-45e2-8325-1aaf39db1d17",
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "328050ee-f3a3-40fb-b4c9-fd05be725a2b"
+      }
+    },
+    {
+      "__guid": "45f65346-f45f-40af-9c0f-86306a0291d7",
+      "__version": 1,
+      "__Prefab": "prefabs/goomba.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Name",
+            "Value": "goomba (6)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Position",
+            "Value": "831.3105,-2445.162,64.06253"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "45f65346-f45f-40af-9c0f-86306a0291d7",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "763ae54b-f472-453f-83f8-beb69f3344cb",
+        "c388807f-683c-4dbc-aeb4-3af4e415cfe4": "8205c4de-47dd-449b-abd9-061f50687355",
+        "c995ae5f-33c7-4595-aa68-d4614a040a31": "85ba7ac9-82c4-4941-83be-0bdd6bf17786",
+        "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "3ef3d7c1-61c7-406f-bc99-25cec53ccff4",
+        "86e361e1-38af-4194-a2bd-fbde3b9466eb": "a6fdc6b7-a3e4-4ff8-b9de-47d083ebc843",
+        "85429795-64a2-4ff3-9892-616c26963679": "efea7572-ed56-41ee-b375-097e461a0ebb",
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "b033e9ed-cce3-42a1-bfef-d46a986db03a"
+      }
+    },
+    {
+      "__guid": "949ded51-3598-4e8d-bd9d-3006d34c4bde",
+      "__version": 1,
+      "__Prefab": "prefabs/goomba_lil.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Position",
+            "Value": "939.1562,-2243.435,64.06249"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Rotation",
+            "Value": "0,0,0,0.9999999"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "949ded51-3598-4e8d-bd9d-3006d34c4bde",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "342ac222-ca47-42cf-95a5-6419f7956d2d",
+        "3eb515a5-45e4-49c8-97c4-d5a2070421f5": "90e2e560-239c-48f5-b874-0d4fd3870426",
+        "c995ae5f-33c7-4595-aa68-d4614a040a31": "b7dbde35-b20c-4488-853a-b597cffb17a3",
+        "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "acb97c90-e55f-433f-b014-130d8e34aad9",
+        "86e361e1-38af-4194-a2bd-fbde3b9466eb": "40456b73-1441-4ebe-a969-b5158da820d7",
+        "85429795-64a2-4ff3-9892-616c26963679": "33498759-e65c-45a0-a092-2db58e510806",
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "afda7f42-1fae-412c-bb8f-44377ea519c9"
+      }
+    },
+    {
+      "__guid": "e4e3028b-9402-4a84-8074-25a35510babb",
+      "__version": 1,
+      "__Prefab": "prefabs/goomba_lil.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Name",
+            "Value": "goomba_lil (1)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Position",
+            "Value": "563.5721,-2463.657,67.85334"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "e4e3028b-9402-4a84-8074-25a35510babb",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "c6fdb299-6aa9-4079-b27e-961b60157c88",
+        "3eb515a5-45e4-49c8-97c4-d5a2070421f5": "686fecfb-fc04-4d00-91f1-d00dcc1bcc63",
+        "c995ae5f-33c7-4595-aa68-d4614a040a31": "16765c16-1a5a-4053-8b46-ac20e557c390",
+        "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "1236bee7-b3c8-4a23-8733-a363a17a9750",
+        "86e361e1-38af-4194-a2bd-fbde3b9466eb": "ccc759fa-ded1-4fac-962e-aa4391e035ff",
+        "85429795-64a2-4ff3-9892-616c26963679": "2733f39d-d53f-4436-9e26-6210dfc36b6c",
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "30eb43f9-dd47-44c9-8dfb-09021bcd11c2"
+      }
+    },
+    {
+      "__guid": "aa2180b4-85e2-4151-90c0-c90ba0f2b407",
+      "__version": 1,
+      "__Prefab": "prefabs/goomba_lil.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Name",
+            "Value": "goomba_lil (2)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Position",
+            "Value": "712.4797,-2256.599,64.06252"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "aa2180b4-85e2-4151-90c0-c90ba0f2b407",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "c4499b85-625c-4b79-b110-20de9863ef25",
+        "3eb515a5-45e4-49c8-97c4-d5a2070421f5": "b8d09f30-9a19-4cdb-a08b-e96ef7783421",
+        "c995ae5f-33c7-4595-aa68-d4614a040a31": "c123528d-c958-4541-bbf7-25788377ed18",
+        "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "66ac78ee-519c-440c-9dd3-0c0fd7e86fc1",
+        "86e361e1-38af-4194-a2bd-fbde3b9466eb": "96ae61a1-22f7-4ac5-8cd3-7b313f30cd30",
+        "85429795-64a2-4ff3-9892-616c26963679": "f0dc24a1-a603-4d0f-a1fd-24b53cc7a694",
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "851522f2-608e-4406-9393-227fcc48a517"
+      }
+    },
+    {
+      "__guid": "02a108a8-f6de-400a-9c75-8978dba8e7a8",
+      "__version": 1,
+      "__Prefab": "prefabs/goomba_lil.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Name",
+            "Value": "goomba_lil (3)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Position",
+            "Value": "821.4911,-2024.369,64.06249"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "02a108a8-f6de-400a-9c75-8978dba8e7a8",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "14dd94aa-331b-404d-aa73-e16563baca3a",
+        "3eb515a5-45e4-49c8-97c4-d5a2070421f5": "86167c8d-e3c1-4336-b84c-06cee0f8f760",
+        "c995ae5f-33c7-4595-aa68-d4614a040a31": "a20a6eb6-2a70-4aff-bbab-750914367472",
+        "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "1efd47ca-c556-47c5-ad45-becbe5b291fb",
+        "86e361e1-38af-4194-a2bd-fbde3b9466eb": "4c73d157-748f-4dfa-9924-1cc9554802ca",
+        "85429795-64a2-4ff3-9892-616c26963679": "1cb727cd-2d40-4bb8-a788-cf034eff2f79",
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "e224b0ec-3cde-4dac-bf5d-4a7a0665b714"
+      }
+    },
+    {
+      "__guid": "ffd0e97b-59d8-48d5-b7cd-e64963b5bac0",
+      "__version": 1,
+      "__Prefab": "prefabs/goomba.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Name",
+            "Value": "goomba (7)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9"
+            },
+            "Property": "Position",
+            "Value": "347.2145,-991.9077,1472.062"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f819d7a6-6ad7-4e99-8c2c-fe8fb56cbdd9": "ffd0e97b-59d8-48d5-b7cd-e64963b5bac0",
+        "d16a3270-e967-4be4-80b4-2a360f05bdff": "27c9c4a0-c28c-45ea-afa1-c1fbcf404c0c",
+        "c388807f-683c-4dbc-aeb4-3af4e415cfe4": "c21ded47-9f0e-41d8-aa12-b068c6edae44",
+        "c995ae5f-33c7-4595-aa68-d4614a040a31": "3794c674-97a7-4a41-ab4d-d38167b28be5",
+        "5a33eb34-6e94-48a2-b346-ab14247fe3e7": "5b366c86-550d-4d9a-8df0-761c49675d1e",
+        "86e361e1-38af-4194-a2bd-fbde3b9466eb": "f5855596-6213-4c65-9036-5b5f0fda4545",
+        "85429795-64a2-4ff3-9892-616c26963679": "9981041e-63d8-4912-b9c3-34b672b903e2",
+        "74e334a6-26f3-45fe-94c7-093682fc7729": "872ef7e4-65dd-4b97-afd2-a0a3f791d499"
+      }
+    },
+    {
+      "__guid": "81fe5090-0377-49c2-a5a6-3433658e628d",
+      "__version": 1,
+      "__Prefab": "prefabs/chip.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Name",
+            "Value": "chip (1)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Position",
+            "Value": "-553.5312,-1577.22,217.0523"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Rotation",
+            "Value": "0,0,0,0.9999999"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "3ef14104-0b81-4f85-983e-9a10063a4df9": "81fe5090-0377-49c2-a5a6-3433658e628d",
+        "de0b0ff0-4abe-4e31-af42-04ced7275a3a": "06df13d3-9b00-4a36-a7c6-f3927bc592dc",
+        "e42b6ad0-fb56-47d9-9e87-b1bff18569d1": "c6cea52f-d15e-4b4e-a33b-3ec9cf372f04",
+        "e888936a-e647-4b70-8569-a607de6e3fe5": "053bf6f7-8849-46c8-9ac4-ae4601e9e784",
+        "9d861cbf-b6f9-4474-ae5f-166aa9c06db6": "5725a8c7-edce-46a6-9ae6-3444c0581c35",
+        "8785f47c-881c-4912-a38f-f80cf7f624f6": "e7ef484b-33a1-4447-90a7-111599b98f5a"
+      }
+    },
+    {
+      "__guid": "af8627a9-0b25-4ac6-b806-7aa87e1eb107",
+      "__version": 1,
+      "__Prefab": "prefabs/chip.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Name",
+            "Value": "chip (2)"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Position",
+            "Value": "1245.047,-1276.299,525.3009"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "3ef14104-0b81-4f85-983e-9a10063a4df9"
+            },
+            "Property": "Rotation",
+            "Value": "0,0,0,0.9999999"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "3ef14104-0b81-4f85-983e-9a10063a4df9": "af8627a9-0b25-4ac6-b806-7aa87e1eb107",
+        "de0b0ff0-4abe-4e31-af42-04ced7275a3a": "5e95e3c3-67a6-4858-a5e1-00fa9efbb4d4",
+        "e42b6ad0-fb56-47d9-9e87-b1bff18569d1": "2781bd19-759f-4cdf-8466-bc5f66843283",
+        "e888936a-e647-4b70-8569-a607de6e3fe5": "262e9956-e823-4789-9b3b-3746a8822dcf",
+        "9d861cbf-b6f9-4474-ae5f-166aa9c06db6": "43725267-e3fe-4dc1-8f4f-489bad255f45",
+        "8785f47c-881c-4912-a38f-f80cf7f624f6": "518d08be-8a2e-4502-bd4a-5d2241be2c0d"
+      }
+    },
+    {
+      "__guid": "66c7eabe-1374-4932-be09-c4983cc7a88d",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Text",
+      "Position": "9.256964,399.8128,483.2812",
+      "Rotation": "0,0,-0.7071067,0.7071068",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.TextRenderer",
+          "__guid": "09b14339-4b05-41f4-8c35-f4550a5f15be",
+          "__enabled": true,
+          "__version": 1,
+          "BlendMode": "Normal",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "Scale": 0.5,
+          "TextAlignment": "Center",
+          "TextScope": {
+            "Text": "BEST TIMES",
+            "TextColor": "0.45103,0.47149,0.5297,1",
+            "FontName": "Poppins",
+            "FontSize": 64,
+            "FontWeight": 800,
+            "FontItalic": false,
+            "LineHeight": 1,
+            "LetterSpacing": 0,
+            "WordSpacing": 0,
+            "Outline": {
+              "Enabled": false,
+              "Size": 4,
+              "Color": "0,0,1,1"
+            },
+            "Shadow": {
+              "Enabled": false,
+              "Size": 4,
+              "Color": "0,0,0,1",
+              "Offset": "4,4"
+            },
+            "OutlineUnder": {
+              "Enabled": false,
+              "Size": 4,
+              "Color": "0,1,0,1"
+            },
+            "ShadowUnder": {
+              "Enabled": false,
+              "Size": 4,
+              "Color": "0,0,0,1",
+              "Offset": "4,4"
+            }
+          }
+        }
+      ],
+      "Children": []
     }
   ],
   "SceneProperties": {

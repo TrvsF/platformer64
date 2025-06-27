@@ -43,8 +43,9 @@ public sealed class PlayerState : Component
 		Local = this;
 	}
 
-	public void OnKill()
+	public async void OnKill()
 	{
+		await Task.Delay(5000);
 		HostRequestServerSpawn();
 	}
 

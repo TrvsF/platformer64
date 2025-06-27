@@ -138,7 +138,7 @@ public sealed class Goomba : AiComponent
 
 		if (!CharacterController.IsOnGround)
 		{
-			CharacterController.Velocity -= GameManager.Gravity * Time.Delta;
+			CharacterController.Velocity -= GameManager.Gravity * Time.Delta * 5f;
 		}
 	}
 
@@ -170,7 +170,10 @@ public sealed class Goomba : AiComponent
 				SpawnChildren();
 			}
 
-			DestroyGameObject(); // TODO : this is causing hitches in editor!!!
+			// HACK : for now...
+			HeadBox.GameObject.Destroy();
+			BodyBox.GameObject.Destroy();
+			// DestroyGameObject(); // TODO : this is causing hitches in editor!!!
 		}
 	}
 

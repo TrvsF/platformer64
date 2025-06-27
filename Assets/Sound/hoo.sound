@@ -8,7 +8,7 @@
     "sound/hoo.vsnd"
   ],
   "Occlusion": true,
-  "AirAbsorption": true,
+  "AirAbsorption": false,
   "Transmission": true,
   "OcclusionRadius": 64,
   "DistanceAttenuation": true,

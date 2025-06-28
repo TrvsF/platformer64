@@ -99,10 +99,8 @@ public sealed class PlayerPawn : Component
 		return TimeSinceHealthChange < DamageCooldownTime;
 	}
 
-	public void TakeDamage_ServerOnly(int Damage)
+	public void TakeDamage(int Damage)
 	{
-		Assert.True(Networking.IsHost);
-
 		if (IsInvunrable())
 		{
 			return;
@@ -113,16 +111,23 @@ public sealed class PlayerPawn : Component
 
 		if (Health <= 0)
 		{
-			Kill_ServerOnly();
+			ServerKill();
 		}
 	}
 
-	private void Kill_ServerOnly()
+	[Rpc.Host]
+	private void ServerKill()
 	{
 		Assert.True(Networking.IsHost);
 
 		OnDeath?.Invoke();
 		DestroyGameObject();
+	}
+
+	[Rpc.Owner]
+	public void TeleportTo(Vector3 Location)
+	{
+		WorldPosition = Location;
 	}
 
 	///////////////////////////////////////////////////////////////////////////

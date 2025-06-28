@@ -20,9 +20,14 @@ public sealed class Door : Component
 	TimeSince TimeSinceOpen = 0;
 	protected override void OnUpdate()
 	{
+		if (!Networking.IsHost)
+		{
+			return;
+		}
+
 		foreach (var Collectable in CollectablesToOpen)
 		{
-			if (GameManager.GetCollectable(Collectable.Key) < Collectable.Value)
+			if (GameManager.GetCollectable_ServerOnly(Collectable.Key) < Collectable.Value)
 			{
 				TimeSinceOpen = 0;
 				return;

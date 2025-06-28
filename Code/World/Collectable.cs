@@ -33,9 +33,19 @@ public sealed class Collectable : Component
 
 	private void OnCollide(Collider Collider)
 	{
+		if (!Networking.IsHost)
+		{
+			return;
+		}
+
+		if (Collider.Tags.Contains("feet"))
+		{
+			return;
+		}
+
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
-			GameManager.OnCollect(CollectableType);
+			GameManager.OnCollect_ServerOnly(Scene, CollectableType);
 			DestroyGameObject();
 		}
 	}

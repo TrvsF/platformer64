@@ -33,12 +33,14 @@ public sealed class Platform : Component
 			return;
 		}
 
+		var NormalMovDir = MoveDir.Normal;
+
 		foreach (var Player in PlayerPawns)
 		{
-			Player.GameObject.Root.WorldPosition += MoveDir;
+			Player.GameObject.Root.WorldPosition += NormalMovDir;
 		}
 
-		Rigidbody.Velocity = MoveDir * 50;
+		Rigidbody.Velocity = NormalMovDir * 50;
 	}
 
 	private void BindBox(BoxCollider Box, Vector3 Direction)
@@ -53,6 +55,13 @@ public sealed class Platform : Component
 		{
 			return;
 		}
+
+		if (Collider.Tags.Contains("feet"))
+		{
+			return;
+		}
+
+		Log.Info($"ENTER {Direction}");
 
 		var PlayerPawn = Collider.GameObject.Root.GetComponent<PlayerPawn>();
 		if (PlayerPawn == null)
@@ -70,6 +79,13 @@ public sealed class Platform : Component
 		{
 			return;
 		}
+
+		if (Collider.Tags.Contains("feet"))
+		{
+			return;
+		}
+
+		Log.Info($"LEAVE {Direction}");
 
 		var PlayerPawn = Collider.GameObject.Root.GetComponent<PlayerPawn>();
 		if (PlayerPawn == null)

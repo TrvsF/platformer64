@@ -21,7 +21,7 @@ public sealed class DeathZone : Component
 
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
-			PlayerPawn.TakeDamage_ServerOnly(99999);
+			PlayerPawn.TakeDamage(99999);
 		}
 	}
 }

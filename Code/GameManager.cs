@@ -49,9 +49,9 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	///////////////////////////////////////////////////////////////////////////
 
-	private TimeSince TimeSinceStart;
-	private static Dictionary<ECollectable, int> CollectableQuantities;
-	private static Dictionary<ECollectable, int> CollectablesCollected;
+	private static TimeSince TimeSinceStart;
+	[Sync(SyncFlags.FromHost)] private static NetDictionary<ECollectable, int> CollectableQuantities { get; set; }
+	[Sync(SyncFlags.FromHost)] private static NetDictionary<ECollectable, int> CollectablesCollected { get; set; }
 
 	protected override void OnStart()
 	{
@@ -73,52 +73,100 @@ public sealed class GameManager : Component, Component.INetworkListener
 			++CollectableQuantities[Collectable.CollectableType];
 		}
 
+		ResetGame_ServerOnly();
+	}
+
+	private static void ResetGame_ServerOnly()
+	{
+		Assert.True(Networking.IsHost);
+
+		TimeSinceStart = 0;
+
 		CollectablesCollected = new()
 		{
 			{ ECollectable.Disc, 0 },
 			{ ECollectable.Egg, 0 },
-		}; 
+		};
 	}
 
-	public static int GetCollectable(ECollectable CollectableType)
+	public static int GetCollectable_ServerOnly(ECollectable CollectableType)
 	{
+		Assert.True(Networking.IsHost);
 		return CollectablesCollected[CollectableType];
 	}
 
-	public static int OnCollect(ECollectable CollectableType, int Collectables = 1)
+	public static void OnCollect_ServerOnly(Scene Scene, ECollectable CollectableType, int Collectables = 1)
 	{
+		Assert.True(Networking.IsHost);
+
 		var Num = CollectablesCollected[CollectableType] += Collectables;
 		if (Num >= CollectableQuantities[CollectableType])
 		{
 			Log.Info($"found all of {CollectableType}!!!");
+
+			if (CollectableType == ECollectable.Egg)
+			{
+				double Time = TimeSinceStart;
+				BroadcastOnGameOver(Scene, Time, CollectableQuantities.ToDictionary(), CollectablesCollected.ToDictionary());
+			}
 		}
-		
-		return Num;
 	}
 
 	public static string GetCollectableString()
 	{
 		var CollectableString = "";
 
-		foreach (var CollectablePair in CollectablesCollected)
+		if (Networking.IsHost)
 		{
-			CollectableString += $"{CollectablePair.Key.ToString().ToLower()}s : {CollectablePair.Value}\n";
+			foreach (var CollectablePair in CollectablesCollected)
+			{
+				CollectableString += $"{CollectablePair.Key.ToString().ToLower()}s : {CollectablePair.Value}\n";
+			}
 		}
 
 		return CollectableString;
 	}
 
-	public static bool AreAllDoorsOpen(Scene Scene)
+	[Rpc.Broadcast]
+	public static void BroadcastOnGameOver(Scene Scene, double Time, Dictionary<ECollectable, int> InCollectableQuantities, Dictionary<ECollectable, int> InCollectableCollected)
 	{
-		foreach (var Door in Scene.GetAllComponents<Door>())
+		Log.Info($"finished in {Time}");
+
+		var TooSlow = false;
+		if (Sandbox.Services.Stats.LocalPlayer.TryGet(LeaderboardText.StatName, out var BestTime))
 		{
-			if (!Door.IsOpen)
+			if (Time > BestTime.LastValue)
 			{
-				return false;
+				TooSlow = true;
 			}
 		}
 
-		return true;
+		if (!TooSlow)
+		{
+			Sandbox.Services.Stats.SetValue(LeaderboardText.StatName, Time);
+		}
+
+		if (Networking.IsHost)
+		{
+			foreach (var LeaderboardText in Scene.GetAllComponents<LeaderboardText>())
+			{
+				LeaderboardText.RefreshAllText(Time, InCollectableQuantities, InCollectableCollected);
+			}
+
+			var XOffset = 50;
+			var C = 1;
+			foreach (var Player in PlayerStates)
+			{
+				if (Player == null || Player.PlayerPawn == null)
+				{
+					continue;
+				}
+
+				Player.PlayerPawn.TeleportTo(new(250f + (XOffset * C), -757.7184f, 2218.035f));
+				++C;
+			}
+			// ResetGame_ServerOnly();
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -230,7 +278,6 @@ public sealed class GameManager : Component, Component.INetworkListener
 	{
 		Networking.Disconnect();
 
-		// TODO : FIX
-		// Game.ActiveScene.LoadFromFile("scenes/menu/menu.scene");
+		Game.ActiveScene.LoadFromFile("scenes/Level.scene");
 	}
 }

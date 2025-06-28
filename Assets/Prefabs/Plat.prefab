@@ -57,12 +57,12 @@
         "Gravity": false,
         "LinearDamping": 0,
         "Locking": {
-          "X": true,
-          "Y": true,
-          "Z": true,
-          "Pitch": false,
-          "Yaw": false,
-          "Roll": false
+          "X": false,
+          "Y": false,
+          "Z": false,
+          "Pitch": true,
+          "Yaw": true,
+          "Roll": true
         },
         "MassCenterOverride": "0,0,0",
         "MassOverride": 0,
@@ -193,7 +193,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "65,65,20",
+            "Scale": "20,20,20",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"
@@ -233,7 +233,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "65,65,20",
+            "Scale": "20,20,20",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"
@@ -273,7 +273,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "65,65,20",
+            "Scale": "20,20,20",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"
@@ -313,7 +313,7 @@
             "OnObjectTriggerExit": null,
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
-            "Scale": "65,65,20",
+            "Scale": "20,20,20",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"

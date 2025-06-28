@@ -16,6 +16,12 @@ public sealed class Goomba : AiComponent
 	{
 		base.OnStart();
 
+		// HACK : we're dead
+		if (HeadBox == null)
+		{
+			return;
+		}
+
 		AIState = EAIState.Wander;
 
 		HeadBox.OnTriggerEnter += OnHeadCollide;
@@ -146,7 +152,7 @@ public sealed class Goomba : AiComponent
 
 	private void OnHeadCollide(Collider Collider)
 	{
-		if (!Networking.IsHost || TimeSinceSpawn < .33f || IsDead)
+		if (TimeSinceSpawn < .33f || IsDead)
 		{
 			return;
 		}
@@ -179,7 +185,7 @@ public sealed class Goomba : AiComponent
 
 	private void OnBodyCollide(Collider Collider)
 	{
-		if (!Networking.IsHost || TimeSinceSpawn < .33f || IsDead)
+		if (TimeSinceSpawn < .33f || IsDead)
 		{
 			return;
 		}
@@ -187,7 +193,7 @@ public sealed class Goomba : AiComponent
 		if (Collider.GameObject.Root.GetComponent<PlayerPawn>() is { } PlayerPawn)
 		{
 			WorldUtil.KnockbackPlayer(PlayerPawn, 800f, false);
-			PlayerPawn.TakeDamage_ServerOnly(Damage);
+			PlayerPawn.TakeDamage(Damage);
 		}
 	}
 

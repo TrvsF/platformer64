@@ -34,7 +34,8 @@
         "OnComponentEnabled": null,
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
-        "OnComponentUpdate": null
+        "OnComponentUpdate": null,
+        "OpenDirection": "0,0,1"
       }
     ],
     "Children": [
@@ -48,10 +49,10 @@
         "Scale": "1,1,1",
         "Tags": "",
         "Enabled": true,
-        "NetworkMode": 2,
+        "NetworkMode": 1,
         "NetworkInterpolation": true,
-        "NetworkOrphaned": 0,
-        "OwnerTransfer": 1,
+        "NetworkOrphaned": 1,
+        "OwnerTransfer": 0,
         "Components": [],
         "Children": []
       },
@@ -65,10 +66,10 @@
         "Scale": "1,1,1",
         "Tags": "",
         "Enabled": true,
-        "NetworkMode": 2,
+        "NetworkMode": 1,
         "NetworkInterpolation": true,
-        "NetworkOrphaned": 0,
-        "OwnerTransfer": 1,
+        "NetworkOrphaned": 1,
+        "OwnerTransfer": 0,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
